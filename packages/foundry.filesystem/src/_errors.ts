@@ -95,6 +95,21 @@ export interface AddResourceRolesPermissionDenied {
 }
 
 /**
+ * Could not add the ResourceTag.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface AddResourceTagsPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "AddResourceTagsPermissionDenied";
+  errorDescription: "Could not add the ResourceTag.";
+  errorInstanceId: string;
+  parameters: {
+    resourceRid: unknown;
+  };
+}
+
+/**
  * The requested operation would result in a circular dependency in the folder hierarchy. For example, moving a folder into one of its descendants.
  *
  * Log Safety: SAFE
@@ -109,14 +124,14 @@ export interface CircularDependency {
 }
 
 /**
- * The given Resource is not a folder.
+ * The given resource is not a folder.
  *
  * Log Safety: SAFE
  */
 export interface CreateFolderOutsideProjectNotSupported {
   errorCode: "INVALID_ARGUMENT";
   errorName: "CreateFolderOutsideProjectNotSupported";
-  errorDescription: "The given Resource is not a folder.";
+  errorDescription: "The given resource is not a folder.";
   errorInstanceId: string;
   parameters: {
     parentFolderRid: unknown;
@@ -343,6 +358,19 @@ export interface GetByPathPermissionDenied {
 }
 
 /**
+ * Could not getRecentlyViewed the Resource.
+ *
+ * Log Safety: SAFE
+ */
+export interface GetRecentlyViewedPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "GetRecentlyViewedPermissionDenied";
+  errorDescription: "Could not getRecentlyViewed the Resource.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
  * Getting the root folder as a resource is not supported.
  *
  * Log Safety: SAFE
@@ -399,7 +427,7 @@ export interface InvalidDescription {
 }
 
 /**
-   * The display name of a Resource should not be exactly . or .., contain a forward slash / and must be
+   * The display name of a resource should not be exactly . or .., contain a forward slash / and must be
 less than or equal to 700 characters.
    *
    * Log Safety: UNSAFE
@@ -408,7 +436,7 @@ export interface InvalidDisplayName {
   errorCode: "INVALID_ARGUMENT";
   errorName: "InvalidDisplayName";
   errorDescription:
-    "The display name of a Resource should not be exactly . or .., contain a forward slash / and must be less than or equal to 700 characters.";
+    "The display name of a resource should not be exactly . or .., contain a forward slash / and must be less than or equal to 700 characters.";
   errorInstanceId: string;
   parameters: {
     displayName: unknown;
@@ -416,14 +444,14 @@ export interface InvalidDisplayName {
 }
 
 /**
- * The given Resource is not a Folder.
+ * The given resource is not a Folder.
  *
  * Log Safety: UNSAFE
  */
 export interface InvalidFolder {
   errorCode: "INVALID_ARGUMENT";
   errorName: "InvalidFolder";
-  errorDescription: "The given Resource is not a Folder.";
+  errorDescription: "The given resource is not a Folder.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;
@@ -814,6 +842,22 @@ export interface ProjectTemplateNotFound {
 }
 
 /**
+ * RecentlyViewedLimit must be greater than or equal to 1
+ *
+ * Log Safety: SAFE
+ */
+export interface RecentlyViewedLimitBelowMinimum {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "RecentlyViewedLimitBelowMinimum";
+  errorDescription: "RecentlyViewedLimit must be greater than or equal to 1";
+  errorInstanceId: string;
+  parameters: {
+    value: unknown;
+    minInclusive: unknown;
+  };
+}
+
+/**
  * Could not removeMarkings the Resource.
  *
  * Log Safety: UNSAFE
@@ -867,6 +911,21 @@ export interface RemoveResourceRolesPermissionDenied {
   errorCode: "PERMISSION_DENIED";
   errorName: "RemoveResourceRolesPermissionDenied";
   errorDescription: "Could not remove the ResourceRole.";
+  errorInstanceId: string;
+  parameters: {
+    resourceRid: unknown;
+  };
+}
+
+/**
+ * Could not remove the ResourceTag.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface RemoveResourceTagsPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "RemoveResourceTagsPermissionDenied";
+  errorDescription: "Could not remove the ResourceTag.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;
@@ -950,14 +1009,14 @@ export interface ResourceNameAlreadyExists {
 }
 
 /**
- * The Resource is not directly trashed.
+ * The resource is not directly trashed.
  *
  * Log Safety: UNSAFE
  */
 export interface ResourceNotDirectlyTrashed {
   errorCode: "INVALID_ARGUMENT";
   errorName: "ResourceNotDirectlyTrashed";
-  errorDescription: "The Resource is not directly trashed.";
+  errorDescription: "The resource is not directly trashed.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;
@@ -980,7 +1039,7 @@ export interface ResourceNotFound {
 }
 
 /**
- * The Resource should be directly trashed before being permanently deleted.
+ * The resource should be directly trashed before being permanently deleted.
  *
  * Log Safety: UNSAFE
  */
@@ -988,7 +1047,7 @@ export interface ResourceNotTrashed {
   errorCode: "INVALID_ARGUMENT";
   errorName: "ResourceNotTrashed";
   errorDescription:
-    "The Resource should be directly trashed before being permanently deleted.";
+    "The resource should be directly trashed before being permanently deleted.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;
@@ -1100,6 +1159,21 @@ export interface SpaceNotFound {
 }
 
 /**
+ * At least one of the provided tag RIDs could not be found.
+ *
+ * Log Safety: SAFE
+ */
+export interface TagNotFound {
+  errorCode: "NOT_FOUND";
+  errorName: "TagNotFound";
+  errorDescription: "At least one of the provided tag RIDs could not be found.";
+  errorInstanceId: string;
+  parameters: {
+    tagRids: unknown;
+  };
+}
+
+/**
  * Creating the project from template would attempt to create new groups with names conflicting either with other new groups, or existing groups.
  *
  * Log Safety: UNSAFE
@@ -1132,14 +1206,14 @@ export interface TemplateMarkingNameConflict {
 }
 
 /**
- * Auto-saved Resources cannot be trashed.
+ * Auto-saved resources cannot be trashed.
  *
  * Log Safety: UNSAFE
  */
 export interface TrashingAutosavedResourcesNotSupported {
   errorCode: "INVALID_ARGUMENT";
   errorName: "TrashingAutosavedResourcesNotSupported";
-  errorDescription: "Auto-saved Resources cannot be trashed.";
+  errorDescription: "Auto-saved resources cannot be trashed.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;
@@ -1147,14 +1221,14 @@ export interface TrashingAutosavedResourcesNotSupported {
 }
 
 /**
- * Hidden Resources cannot be trashed.
+ * Hidden resources cannot be trashed.
  *
  * Log Safety: UNSAFE
  */
 export interface TrashingHiddenResourcesNotSupported {
   errorCode: "INVALID_ARGUMENT";
   errorName: "TrashingHiddenResourcesNotSupported";
-  errorDescription: "Hidden Resources cannot be trashed.";
+  errorDescription: "Hidden resources cannot be trashed.";
   errorInstanceId: string;
   parameters: {
     resourceRid: unknown;

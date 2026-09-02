@@ -38,4 +38,4 @@
 "@osdk/internal.foundry.ontologies": patch
 ---
 
-Regenerate SDKs with API version 1.1668.0
+Regenerate SDKs with API version 1.1769.0

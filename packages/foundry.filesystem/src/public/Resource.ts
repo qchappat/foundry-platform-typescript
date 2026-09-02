@@ -100,7 +100,7 @@ const _getByPath: $FoundryPlatformMethod<
 > = [0, "/v2/filesystem/resources/getByPath", 2];
 
 /**
- * Get a Resource by its absolute path.
+ * Get a resource by its absolute path.
  *
  * @public
  *
@@ -121,7 +121,7 @@ const _getByPathBatch: $FoundryPlatformMethod<
 > = [1, "/v2/filesystem/resources/getByPathBatch", 1];
 
 /**
- * Gets multiple Resources by their absolute paths.
+ * Gets multiple resources by their absolute paths.
  * Returns a list of resources. If a path does not exist, is inaccessible, or refers to
  * a root folder or space, it will not be included in the response.
  * At most 1,000 paths should be requested at once.
@@ -138,6 +138,34 @@ export function getByPathBatch(
   ...args: [$body: Array<_Filesystem.GetByPathResourcesBatchRequestElement>]
 ): Promise<_Filesystem.GetByPathResourcesBatchResponse> {
   return $foundryPlatformFetch($ctx, _getByPathBatch, ...args);
+}
+
+const _getRecentlyViewed: $FoundryPlatformMethod<
+  ($queryParams?: {
+    limit?: _Filesystem.RecentlyViewedLimit | undefined;
+    preview?: _Core.PreviewMode | undefined;
+  }) => Promise<_Filesystem.GetRecentlyViewedResponse>
+> = [0, "/v2/filesystem/resources/getRecentlyViewed", 2];
+
+/**
+ * Get the resources most recently viewed by the calling user. If a resource is now inaccessible or has
+ * been trashed, it will not be included in the response.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:filesystem-read]
+ * URL: /v2/filesystem/resources/getRecentlyViewed
+ */
+export function getRecentlyViewed(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    $queryParams?: {
+      limit?: _Filesystem.RecentlyViewedLimit | undefined;
+      preview?: _Core.PreviewMode | undefined;
+    },
+  ]
+): Promise<_Filesystem.GetRecentlyViewedResponse> {
+  return $foundryPlatformFetch($ctx, _getRecentlyViewed, ...args);
 }
 
 const _restore: $FoundryPlatformMethod<
@@ -165,7 +193,7 @@ const _permanentlyDelete: $FoundryPlatformMethod<
 > = [1, "/v2/filesystem/resources/{0}/permanentlyDelete"];
 
 /**
- * Permanently delete the given resource from the trash. If the Resource is not directly trashed, a
+ * Permanently delete the given resource from the trash. If the resource is not directly trashed, a
  * `ResourceNotTrashed` error will be thrown.
  *
  * @public

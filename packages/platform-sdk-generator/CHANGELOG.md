@@ -1,5 +1,92 @@
 # @osdk/platform-sdk-generator
 
+## 0.75.0
+
+### Patch Changes
+
+- Updated dependencies [57ef640]
+  - @osdk/docs-spec-platform@0.62.0
+
+## 0.74.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/docs-spec-platform@0.61.0
+
+## 0.73.0
+
+### Patch Changes
+
+- Updated dependencies [3f31e9f]
+  - @osdk/docs-spec-platform@0.60.0
+
+## 0.72.0
+
+### Minor Changes
+
+- 83f24f9: Add check for bumping api gateway version without using our automatic generation flow.
+
+### Patch Changes
+
+- Updated dependencies [0e60c3e]
+  - @osdk/docs-spec-platform@0.59.0
+
+## 0.71.0
+
+### Patch Changes
+
+- Updated dependencies [0dc6240]
+- Updated dependencies [934f9e1]
+  - @osdk/docs-spec-platform@0.58.0
+
+## 0.70.0
+
+### Patch Changes
+
+- Updated dependencies [e0a20ae]
+  - @osdk/docs-spec-platform@0.57.0
+
+## 0.69.0
+
+### Patch Changes
+
+- Updated dependencies [be7f6cd]
+  - @osdk/docs-spec-platform@0.56.0
+
+## 0.68.0
+
+### Patch Changes
+
+- Updated dependencies [bbdf2b4]
+  - @osdk/docs-spec-platform@0.55.0
+
+## 0.67.0
+
+### Patch Changes
+
+- Updated dependencies [7357b5f]
+  - @osdk/docs-spec-platform@0.54.0
+
+## 0.66.0
+
+### Patch Changes
+
+- Updated dependencies [241d1bb]
+  - @osdk/docs-spec-platform@0.53.0
+
+## 0.65.0
+
+### Patch Changes
+
+- Updated dependencies [0ee40aa]
+- Updated dependencies [b53de25]
+  - @osdk/docs-spec-platform@0.52.0
+
 ## 0.64.0
 
 ### Patch Changes

@@ -19,6 +19,23 @@ export type LooselyBrandedString<T extends string> = string & {
 };
 
 /**
+ * Artifact-backed documents require a namespace upon creation.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ArtifactDocumentCreationMissingNamespace {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "ArtifactDocumentCreationMissingNamespace";
+  errorDescription:
+    "Artifact-backed documents require a namespace upon creation.";
+  errorInstanceId: string;
+  parameters: {
+    documentTypeName: unknown;
+    providedParent: unknown;
+  };
+}
+
+/**
  * Autosaved documents cannot be deleted.
  *
  * Log Safety: SAFE
@@ -49,19 +66,64 @@ export interface CannotDeleteHiddenDocument {
 }
 
 /**
-   * The user does not have permission to create documents of the given type in
-the given ontology, or the Document Type does not exist in the ontology.
+ * Compass-backed documents require a parent folder upon creation.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface CompassDocumentCreationMissingParentFolder {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "CompassDocumentCreationMissingParentFolder";
+  errorDescription:
+    "Compass-backed documents require a parent folder upon creation.";
+  errorInstanceId: string;
+  parameters: {
+    documentTypeName: unknown;
+    providedParent: unknown;
+  };
+}
+
+/**
+   * Compass backed documents do not support discretionary security on creation. The creating user will be an
+owner of the document by default.
    *
    * Log Safety: UNSAFE
    */
-export interface CreateDocumentNotSupported {
-  errorCode: "PERMISSION_DENIED";
-  errorName: "CreateDocumentNotSupported";
+export interface CompassDocumentCreationWithDiscretionarySecurityNotSupported {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "CompassDocumentCreationWithDiscretionarySecurityNotSupported";
   errorDescription:
-    "The user does not have permission to create documents of the given type in the given ontology, or the Document Type does not exist in the ontology.";
+    "Compass backed documents do not support discretionary security on creation. The creating user will be an owner of the document by default.";
   errorInstanceId: string;
   parameters: {
-    ontologyRid: unknown;
+    documentTypeName: unknown;
+  };
+}
+
+/**
+ * Could not createChild the Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface CreateDocumentAsChildPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "CreateDocumentAsChildPermissionDenied";
+  errorDescription: "Could not createChild the Document.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
+ * The user does not have permission to create documents of this Document Type.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface CreateDocumentOfTypePermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "CreateDocumentOfTypePermissionDenied";
+  errorDescription:
+    "The user does not have permission to create documents of this Document Type.";
+  errorInstanceId: string;
+  parameters: {
     documentTypeName: unknown;
   };
 }
@@ -88,6 +150,32 @@ export interface CreateDocumentTypePermissionDenied {
   errorCode: "PERMISSION_DENIED";
   errorName: "CreateDocumentTypePermissionDenied";
   errorDescription: "Could not create the DocumentType.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
+ * Could not createV2 the Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface CreateDocumentV2PermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "CreateDocumentV2PermissionDenied";
+  errorDescription: "Could not createV2 the Document.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
+ * Could not createMatchingSecurity the Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface CreateDocumentWithMatchingSecurityPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "CreateDocumentWithMatchingSecurityPermissionDenied";
+  errorDescription: "Could not createMatchingSecurity the Document.";
   errorInstanceId: string;
   parameters: {};
 }
@@ -157,10 +245,27 @@ export interface DocumentTypeAlreadyExists {
  * Log Safety: UNSAFE
  */
 export interface DocumentTypeNameNotFound {
-  errorCode: "PERMISSION_DENIED";
+  errorCode: "NOT_FOUND";
   errorName: "DocumentTypeNameNotFound";
   errorDescription:
     "The Document Type Name does not exist, or the user does not have permission to view the Document Type.";
+  errorInstanceId: string;
+  parameters: {
+    documentTypeName: unknown;
+  };
+}
+
+/**
+   * Creating a hidden child document or a document matching another document's security is only supported
+for Compass-backed Document Types.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface DocumentTypeNotCompassBacked {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "DocumentTypeNotCompassBacked";
+  errorDescription:
+    "Creating a hidden child document or a document matching another document's security is only supported for Compass-backed Document Types.";
   errorInstanceId: string;
   parameters: {
     documentTypeName: unknown;
@@ -191,6 +296,36 @@ export interface GetOperationalVersionDocumentTypePermissionDenied {
   errorCode: "PERMISSION_DENIED";
   errorName: "GetOperationalVersionDocumentTypePermissionDenied";
   errorDescription: "Could not getOperationalVersion the DocumentType.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
+ * A child document's parent must be a folder or another document.
+ *
+ * Log Safety: SAFE
+ */
+export interface InvalidChildDocumentParent {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "InvalidChildDocumentParent";
+  errorDescription:
+    "A child document's parent must be a folder or another document.";
+  errorInstanceId: string;
+  parameters: {
+    parentResourceRid: unknown;
+  };
+}
+
+/**
+ * The provided document name must not be empty or consist only of whitespace.
+ *
+ * Log Safety: SAFE
+ */
+export interface InvalidDocumentName {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "InvalidDocumentName";
+  errorDescription:
+    "The provided document name must not be empty or consist only of whitespace.";
   errorInstanceId: string;
   parameters: {};
 }
@@ -240,6 +375,59 @@ export interface LoadByNameDocumentTypesPermissionDenied {
   errorDescription: "Could not loadByName the DocumentType.";
   errorInstanceId: string;
   parameters: {};
+}
+
+/**
+   * The provided document could not be resolved to a namespace or ontology. When namespaceRid is absent,
+the document could not be resolved to a namespace; when namespaceRid is present, that namespace could not
+be resolved to an ontology.
+   *
+   * Log Safety: SAFE
+   */
+export interface NamespaceOrOntologyForDocumentNotFound {
+  errorCode: "NOT_FOUND";
+  errorName: "NamespaceOrOntologyForDocumentNotFound";
+  errorDescription:
+    "The provided document could not be resolved to a namespace or ontology. When namespaceRid is absent, the document could not be resolved to a namespace; when namespaceRid is present, that namespace could not be resolved to an ontology.";
+  errorInstanceId: string;
+  parameters: {
+    documentId: unknown;
+    namespaceRid: unknown;
+  };
+}
+
+/**
+   * The provided parent folder could not be resolved to a namespace or ontology. When namespaceRid is absent,
+the folder could not be resolved to a namespace; when namespaceRid is present, that namespace could not be
+resolved to an ontology.
+   *
+   * Log Safety: SAFE
+   */
+export interface NamespaceOrOntologyForFolderNotFound {
+  errorCode: "NOT_FOUND";
+  errorName: "NamespaceOrOntologyForFolderNotFound";
+  errorDescription:
+    "The provided parent folder could not be resolved to a namespace or ontology. When namespaceRid is absent, the folder could not be resolved to a namespace; when namespaceRid is present, that namespace could not be resolved to an ontology.";
+  errorInstanceId: string;
+  parameters: {
+    folderRid: unknown;
+    namespaceRid: unknown;
+  };
+}
+
+/**
+ * Could not resolveApplication the Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface ResolveApplicationDocumentPermissionDenied {
+  errorCode: "PERMISSION_DENIED";
+  errorName: "ResolveApplicationDocumentPermissionDenied";
+  errorDescription: "Could not resolveApplication the Document.";
+  errorInstanceId: string;
+  parameters: {
+    documentId: unknown;
+  };
 }
 
 /**

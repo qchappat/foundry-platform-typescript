@@ -135,7 +135,7 @@ export interface AsyncQueryRuntimeError {
  * Log Safety: UNSAFE
  */
 export interface AsyncQueryTimeExceededLimit {
-  errorCode: "TIMEOUT";
+  errorCode: "INVALID_ARGUMENT";
   errorName: "AsyncQueryTimeExceededLimit";
   errorDescription: "Time limits were exceeded during async Query execution.";
   errorInstanceId: string;
@@ -356,6 +356,23 @@ export interface InvalidQueryParameterValue {
 }
 
 /**
+   * The combination of version, latestVersionResolution, and includePrerelease provided is not
+supported.
+   *
+   * Log Safety: SAFE
+   */
+export interface InvalidVersionResolutionParameters {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "InvalidVersionResolutionParameters";
+  errorDescription:
+    "The combination of version, latestVersionResolution, and includePrerelease provided is not supported.";
+  errorInstanceId: string;
+  parameters: {
+    message: unknown;
+  };
+}
+
+/**
    * Required parameters are missing. Please look at the parameters field to see which required parameters are
 missing from the request.
    *
@@ -448,7 +465,7 @@ export interface QueryRuntimeError {
  * Log Safety: UNSAFE
  */
 export interface QueryTimeExceededLimit {
-  errorCode: "TIMEOUT";
+  errorCode: "INVALID_ARGUMENT";
   errorName: "QueryTimeExceededLimit";
   errorDescription: "Time limits were exceeded for the Query execution.";
   errorInstanceId: string;

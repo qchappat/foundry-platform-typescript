@@ -1,5 +1,36 @@
 # @osdk/foundry.geojson
 
+## 2.76.0
+
+## 2.75.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/shared.net.platformapi@1.8.0
+
+## 2.74.0
+
+## 2.73.0
+
+## 2.72.0
+
+## 2.71.0
+
+## 2.70.0
+
+## 2.69.0
+
+## 2.68.0
+
+## 2.67.0
+
+## 2.66.0
+
 ## 2.65.0
 
 ## 2.64.0

@@ -1,6 +1,6 @@
 {
   "name": "@osdk/shared.net.platformapi",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -30,7 +30,8 @@
   "dependencies": {
     "@osdk/shared.client": "^1.0.1",
     "@osdk/shared.client2": "^1.0.0",
-    "@osdk/shared.net.errors": "2.5.0-beta.2"
+    "@osdk/shared.net.errors": "2.5.0-beta.2",
+    "eventsource-parser": "^3.1.1"
   },
   "devDependencies": {
     "@osdk/monorepo.api-extractor": "workspace:~",

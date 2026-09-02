@@ -1,5 +1,78 @@
 # @osdk/internal.foundry.geo
 
+## 2.76.0
+
+### Minor Changes
+
+- 57ef640: Regenerate SDKs with API version 1.1763.1
+
+## 2.75.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/shared.net.platformapi@1.8.0
+
+## 2.74.0
+
+### Minor Changes
+
+- 3f31e9f: Regenerate SDKs with API version 1.1751.1
+
+## 2.73.0
+
+### Minor Changes
+
+- 0e60c3e: Regenerate SDKs with API version 1.1740.1
+
+## 2.72.0
+
+### Minor Changes
+
+- 0dc6240: regenerate platform sdk
+- 934f9e1: Regenerate SDKs with API version 1.1734.0
+
+## 2.71.0
+
+### Minor Changes
+
+- e0a20ae: Regenerate SDKs with API version 1.1721.0
+
+## 2.70.0
+
+### Minor Changes
+
+- be7f6cd: Regenerate SDKs with API version 1.1716.0
+
+## 2.69.0
+
+### Minor Changes
+
+- bbdf2b4: Regenerate SDKs with API version 1.1709.0
+
+## 2.68.0
+
+### Minor Changes
+
+- 7357b5f: Regenerate SDKs with API version 1.1695.1
+
+## 2.67.0
+
+### Minor Changes
+
+- 241d1bb: Regenerate SDKs with API version 1.1695.0
+
+## 2.66.0
+
+### Minor Changes
+
+- 0ee40aa: Regenerate SDKs with API version 1.1668.0
+- b53de25: Regenerate SDKs with API version 1.1675.0
+
 ## 2.65.0
 
 ### Minor Changes

@@ -95,6 +95,40 @@ export interface ClientSupportedVersionRange {
 }
 
 /**
+   * Request to create a Document as a hidden child of a hidden child of a folder or document. The Document inherits its
+security from the parent resource and stays in sync as the parent's security changes.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface CreateChildDocumentRequestBody {
+  name: string;
+  description?: string;
+  parentResourceRid: _Filesystem.ResourceRid;
+  documentTypeName: DocumentTypeName;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface CreateDocumentAsChildRequest {
+  requestBody: CreateChildDocumentRequestBody;
+}
+
+/**
+   * Request to create a Document whose security is a one-time copy of a source Document's directly-applied
+markings. The new Document's security is independent of the source's afterward.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface CreateDocumentMatchingSecurityRequestBody {
+  name: string;
+  description?: string;
+  sourceDocumentRid: DocumentRid;
+  documentTypeName: DocumentTypeName;
+  destinationFolderRid?: _Filesystem.FolderRid;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface CreateDocumentRequest {
@@ -119,6 +153,33 @@ export interface CreateDocumentTypeRequest {
 /**
  * Log Safety: UNSAFE
  */
+export interface CreateDocumentV2Request {
+  requestBody: CreateDocumentV2RequestBody;
+}
+
+/**
+ * Request to create a PACK Document.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface CreateDocumentV2RequestBody {
+  name: string;
+  description?: string;
+  documentTypeName: DocumentTypeName;
+  security: DocumentSecurity;
+  parent: DocumentParent;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface CreateDocumentWithMatchingSecurityRequest {
+  requestBody: CreateDocumentMatchingSecurityRequestBody;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
 export interface CreateFirstPartyDocumentTypeRequest {
   requestBody: CreateFirstPartyDocumentTypeRequestBody;
 }
@@ -133,6 +194,7 @@ export interface CreateFirstPartyDocumentTypeRequestBody {
   ontologyRid: string;
   schema: DocumentTypeSchema;
   fileSystemType?: FileSystemType;
+  owningApplicationId?: string;
   version?: SchemaVersion;
 }
 
@@ -146,6 +208,7 @@ export interface CreateFirstPartyDocumentTypeResponse {
   name: DocumentTypeName;
   fileSystemType?: FileSystemType;
   version?: SchemaVersion;
+  owningApplicationId?: string;
 }
 
 /**
@@ -251,7 +314,7 @@ export interface DocumentCreateEventData {
 export interface DocumentCustomEventData {
   eventType: string;
   data: any;
-  version: number;
+  version?: number;
   schemaVersion?: number;
 }
 
@@ -302,7 +365,7 @@ export interface DocumentDiscretionarySecurityUpdateEventData {
  */
 export interface DocumentEditDescription {
   eventData: DocumentCustomEventData;
-  eventType: string;
+  eventType?: string;
 }
 
 /**
@@ -353,6 +416,35 @@ document's security settings and the user's principals.
    * Log Safety: SAFE
    */
 export type DocumentOperation = "VIEW" | "EDIT" | "OWN" | "DELETE";
+
+/**
+   * The Gatekeeper parent the new Document is created under, also used with the documentTypeName to locate the
+associated Document Type instance. The populated variant must match the file system required by that Document
+Type: parentFolder for Compass-backed types, namespace for Artifact-backed types.
+   *
+   * Log Safety: SAFE
+   */
+export type DocumentParent =
+  | ({ type: "parentFolder" } & DocumentParentFolder)
+  | ({ type: "namespace" } & DocumentParentNamespace);
+
+/**
+ * A Compass folder parent for the new Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface DocumentParentFolder {
+  folderRid: _Filesystem.FolderRid;
+}
+
+/**
+ * An Artifact's parent namespace for the new Document.
+ *
+ * Log Safety: SAFE
+ */
+export interface DocumentParentNamespace {
+  namespaceRid: NamespaceRid;
+}
 
 /**
    * Sent when a user's presence changes on a document. That is, sent when a user opens or closes the document.
@@ -423,6 +515,7 @@ export interface DocumentSearchQuery {
  * Log Safety: UNSAFE
  */
 export interface DocumentSearchRequest {
+  ontologyRid?: string;
   query?: DocumentSearchQuery;
   orderBy?: DocumentSort;
   pageSize?: _Core.PageSize;
@@ -481,6 +574,7 @@ export interface DocumentType {
   name: DocumentTypeName;
   operationalVersion?: SchemaVersion;
   fileSystemType?: FileSystemType;
+  owningApplicationId?: string;
 }
 
 /**
@@ -490,10 +584,13 @@ document-type schemas as part of their deployment.
    * Log Safety: UNSAFE
    */
 export interface DocumentTypeAsset {
+  comment?: string;
   documentTypeName: DocumentTypeName;
   documentStorageType: DocumentStorageType;
   fileSystemType: FileSystemType;
   schemaVersion: SchemaVersion;
+  owningApplicationId?: string;
+  forceOverwrite?: boolean;
 }
 
 /**
@@ -759,6 +856,19 @@ export interface FieldValueObjectRef {
 }
 
 /**
+   * A reference to an arbitrary platform resource, held as a RID. Unlike docRef (which references another PACK
+document) or object (which references an ontology object), the reference is not restricted to a single type
+of resource, so the value is only constrained to being a RID.
+Optionally constrained to a list of specific resource RIDs; an empty list permits any resource. Note that
+this enumerates individual resources, whereas docRef and object constrain by type.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface FieldValueResourceRef {
+  resourceRids: Array<_Filesystem.ResourceRid>;
+}
+
+/**
  * A string field value with optional constraints and default.
  *
  * Log Safety: UNSAFE
@@ -797,15 +907,16 @@ export interface FieldValueType {
  */
 export type FieldValueUnion =
   | ({ type: "mediaRef" } & FieldValueMediaRef)
-  | ({ type: "modelRef" } & FieldValueModelRef)
-  | ({ type: "datetime" } & FieldValueDatetime)
-  | ({ type: "userRef" } & FieldValueUserRef)
-  | ({ type: "boolean" } & FieldValueBoolean)
-  | ({ type: "docRef" } & FieldValueDocumentRef)
   | ({ type: "string" } & FieldValueString)
   | ({ type: "double" } & FieldValueDouble)
   | ({ type: "unmanagedJson" } & FieldValueUnmanagedJson)
   | ({ type: "integer" } & FieldValueInteger)
+  | ({ type: "modelRef" } & FieldValueModelRef)
+  | ({ type: "resourceRef" } & FieldValueResourceRef)
+  | ({ type: "datetime" } & FieldValueDatetime)
+  | ({ type: "userRef" } & FieldValueUserRef)
+  | ({ type: "boolean" } & FieldValueBoolean)
+  | ({ type: "docRef" } & FieldValueDocumentRef)
   | ({ type: "text" } & FieldValueText)
   | ({ type: "object" } & FieldValueObjectRef);
 
@@ -913,6 +1024,13 @@ export type ModelDef =
 export type ModelTypeKey = LooselyBrandedString<"ModelTypeKey">;
 
 /**
+ * Identifier for a namespace.
+ *
+ * Log Safety: SAFE
+ */
+export type NamespaceRid = LooselyBrandedString<"NamespaceRid">;
+
+/**
  * Identifier for an ontology object type.
  *
  * Log Safety: SAFE
@@ -964,6 +1082,15 @@ export interface RecordDef {
   name: string;
   description?: string;
   fields: Array<FieldDef>;
+}
+
+/**
+ * The application that owns a PACK Document, resolved via the document's type metadata.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ResolveDocumentApplicationResponse {
+  owningApplicationId?: string;
 }
 
 /**

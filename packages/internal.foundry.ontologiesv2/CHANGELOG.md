@@ -1,5 +1,100 @@
 # @osdk/internal.foundry.ontologiesv2
 
+## 2.76.0
+
+### Patch Changes
+
+- Updated dependencies [57ef640]
+  - @osdk/internal.foundry.core@2.76.0
+  - @osdk/internal.foundry.ontologies@2.76.0
+
+## 2.75.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/internal.foundry.ontologies@2.75.0
+  - @osdk/shared.net.platformapi@1.8.0
+  - @osdk/internal.foundry.core@2.75.0
+
+## 2.74.0
+
+### Patch Changes
+
+- Updated dependencies [3f31e9f]
+  - @osdk/internal.foundry.core@2.74.0
+  - @osdk/internal.foundry.ontologies@2.74.0
+
+## 2.73.0
+
+### Patch Changes
+
+- Updated dependencies [0e60c3e]
+  - @osdk/internal.foundry.core@2.73.0
+  - @osdk/internal.foundry.ontologies@2.73.0
+
+## 2.72.0
+
+### Patch Changes
+
+- Updated dependencies [0dc6240]
+- Updated dependencies [934f9e1]
+  - @osdk/internal.foundry.ontologies@2.72.0
+  - @osdk/internal.foundry.core@2.72.0
+
+## 2.71.0
+
+### Patch Changes
+
+- Updated dependencies [e0a20ae]
+  - @osdk/internal.foundry.core@2.71.0
+  - @osdk/internal.foundry.ontologies@2.71.0
+
+## 2.70.0
+
+### Patch Changes
+
+- Updated dependencies [be7f6cd]
+  - @osdk/internal.foundry.core@2.70.0
+  - @osdk/internal.foundry.ontologies@2.70.0
+
+## 2.69.0
+
+### Patch Changes
+
+- Updated dependencies [bbdf2b4]
+  - @osdk/internal.foundry.core@2.69.0
+  - @osdk/internal.foundry.ontologies@2.69.0
+
+## 2.68.0
+
+### Patch Changes
+
+- Updated dependencies [7357b5f]
+  - @osdk/internal.foundry.core@2.68.0
+  - @osdk/internal.foundry.ontologies@2.68.0
+
+## 2.67.0
+
+### Patch Changes
+
+- Updated dependencies [241d1bb]
+  - @osdk/internal.foundry.core@2.67.0
+  - @osdk/internal.foundry.ontologies@2.67.0
+
+## 2.66.0
+
+### Patch Changes
+
+- Updated dependencies [0ee40aa]
+- Updated dependencies [b53de25]
+  - @osdk/internal.foundry.core@2.66.0
+  - @osdk/internal.foundry.ontologies@2.66.0
+
 ## 2.65.0
 
 ### Patch Changes

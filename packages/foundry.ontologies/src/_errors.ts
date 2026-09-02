@@ -191,6 +191,24 @@ export interface AggregationAccuracyNotSupported {
 }
 
 /**
+   * The aggregation request contains too many levels of nested groupings. This can be fixed by reducing the
+number of nested groupings in your request.
+   *
+   * Log Safety: SAFE
+   */
+export interface AggregationDepthExceededLimit {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "AggregationDepthExceededLimit";
+  errorDescription:
+    "The aggregation request contains too many levels of nested groupings. This can be fixed by reducing the number of nested groupings in your request.";
+  errorInstanceId: string;
+  parameters: {
+    depth: unknown;
+    depthLimit: unknown;
+  };
+}
+
+/**
    * The number of groups in the aggregations grouping exceeded the allowed limit. This can typically be fixed by
 adjusting your query to reduce the number of groups created by your aggregation. For instance:
 
@@ -367,6 +385,26 @@ export interface CipherChannelNotFound {
 }
 
 /**
+   * A Cipher Channel could not be resolved for encryption under the requested
+cipherChannelStrategy. Depending on the strategy, this means the object has no existing
+encrypted value and/or the property has no default Cipher Channel configured.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface CipherChannelNotResolvable {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "CipherChannelNotResolvable";
+  errorDescription:
+    "A Cipher Channel could not be resolved for encryption under the requested cipherChannelStrategy. Depending on the strategy, this means the object has no existing encrypted value and/or the property has no default Cipher Channel configured.";
+  errorInstanceId: string;
+  parameters: {
+    objectType: unknown;
+    property: unknown;
+    strategy: unknown;
+  };
+}
+
+/**
    * Primary keys consisting of multiple properties are not supported by this API. If you need support for this,
 please reach out to Palantir Support.
    *
@@ -513,7 +551,7 @@ export interface FunctionExecutionFailed {
  * Log Safety: UNSAFE
  */
 export interface FunctionExecutionTimedOut {
-  errorCode: "TIMEOUT";
+  errorCode: "INVALID_ARGUMENT";
   errorName: "FunctionExecutionTimedOut";
   errorDescription: "";
   errorInstanceId: string;
@@ -1758,6 +1796,25 @@ export interface ObjectsModifiedConcurrently {
 }
 
 /**
+   * The request uses an object type derived property in a way that is not supported. This occurs when results
+are sorted by the derived property, when the object set is filtered on the derived property, or when the
+derived property is returned only because the request asked for all properties of the object type (rather
+than naming it explicitly). To resolve this, remove the derived property from the sort ordering and from any
+filters, and select only the specific properties you need - you may select the derived property itself by
+name.
+   *
+   * Log Safety: SAFE
+   */
+export interface ObjectTypeDerivedPropertyNotSupported {
+  errorCode: "INVALID_ARGUMENT";
+  errorName: "ObjectTypeDerivedPropertyNotSupported";
+  errorDescription:
+    "The request uses an object type derived property in a way that is not supported. This occurs when results are sorted by the derived property, when the object set is filtered on the derived property, or when the derived property is returned only because the request asked for all properties of the object type (rather than naming it explicitly). To resolve this, remove the derived property from the sort ordering and from any filters, and select only the specific properties you need - you may select the derived property itself by name.";
+  errorInstanceId: string;
+  parameters: {};
+}
+
+/**
  * The requested object type is not found, or the client token does not have access to it.
  *
  * Log Safety: UNSAFE
@@ -2325,7 +2382,7 @@ export interface QueryRuntimeError {
  * Log Safety: UNSAFE
  */
 export interface QueryTimeExceededLimit {
-  errorCode: "TIMEOUT";
+  errorCode: "INVALID_ARGUMENT";
   errorName: "QueryTimeExceededLimit";
   errorDescription: "Time limits were exceeded for the Query execution.";
   errorInstanceId: string;

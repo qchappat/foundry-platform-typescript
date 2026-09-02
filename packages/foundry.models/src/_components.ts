@@ -80,6 +80,7 @@ export type CreateConfigValidationFailureReason =
     type: "multiplePropertiesNotAllowedForTrainer";
   } & MultiplePropertiesNotAllowedForTrainerError)
   | ({ type: "fieldValidationFailure" } & FieldValidationError)
+  | ({ type: "unsupportedDatasetFieldType" } & UnsupportedDatasetFieldTypeError)
   | ({ type: "changelogTooLong" } & ChangelogTooLongError)
   | ({
     type: "unknownColumnSpecIdInConfigColumnMapping";
@@ -91,6 +92,9 @@ export type CreateConfigValidationFailureReason =
     type: "missingWorkerConfigInputDatasetColumnMapping";
   } & MissingWorkerConfigInputDatasetColumnMappingError)
   | ({ type: "datasetSchemaNotFound" } & DatasetSchemaNotFoundError)
+  | ({
+    type: "invalidWorkerConfigInputType";
+  } & InvalidWorkerConfigInputTypeError)
   | ({ type: "missingWorkerConfigInput" } & MissingWorkerConfigInputError)
   | ({
     type: "missingWorkerConfigInputObjectSetPropertyMapping";
@@ -522,6 +526,17 @@ export interface InvalidTabularFormatError {
 }
 
 /**
+ * A worker config input was provided with a type that does not match the expected type.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface InvalidWorkerConfigInputTypeError {
+  inputAlias: InputAlias;
+  expectedType: string;
+  actualType: string;
+}
+
+/**
  * The custom configuration failed JSON schema validation.
  *
  * Log Safety: UNSAFE
@@ -610,7 +625,7 @@ export type LiveDeploymentRid = LooselyBrandedString<"LiveDeploymentRid">;
 /**
  * The compute resource configuration for a live deployment, controlling replica scaling, CPU, memory, and GPU resources.
  *
- * Log Safety: SAFE
+ * Log Safety: UNSAFE
  */
 export interface LiveDeploymentRuntimeConfiguration {
   minReplicas: number;
@@ -620,6 +635,7 @@ export interface LiveDeploymentRuntimeConfiguration {
   gpu?: LiveDeploymentGpu;
   threadCount?: number;
   scalingConfiguration?: LiveDeploymentScalingConfiguration;
+  environmentVariables: Record<string, string>;
 }
 
 /**
@@ -1237,7 +1253,7 @@ export interface PromoteVersionModelRequest {
 }
 
 /**
- * Log Safety: SAFE
+ * Log Safety: UNSAFE
  */
 export interface ReplaceLiveDeploymentRequest {
   runtimeConfiguration: LiveDeploymentRuntimeConfiguration;
@@ -1702,6 +1718,17 @@ export interface UnknownColumnSpecIdInConfigColumnMappingError {
  */
 export interface UnknownInputNameError {
   inputName: string;
+}
+
+/**
+ * A dataset field has a type that is not supported by the trainer.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface UnsupportedDatasetFieldTypeError {
+  datasetRid: _Core.DatasetRid;
+  fieldName?: string;
+  fieldType: string;
 }
 
 /**

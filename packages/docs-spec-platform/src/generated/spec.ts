@@ -52,6 +52,9 @@ export const PLATFORM_API_DOCS_SPEC = {
     "v2.getOpenApiDefinition": {
       "variables": {},
     },
+    "v2.getOpenApiDefinitionAsYaml": {
+      "variables": {},
+    },
     "v2.createTargetBoard": {
       "variables": {},
     },
@@ -208,7 +211,13 @@ export const PLATFORM_API_DOCS_SPEC = {
     "v2.getState": {
       "variables": {},
     },
+    "v2.getProgress": {
+      "variables": {},
+    },
     "v2.getActions": {
+      "variables": {},
+    },
+    "v2.loadDiagnosticsCapture": {
       "variables": {},
     },
     "v2.listOntologiesV2": {
@@ -241,7 +250,13 @@ export const PLATFORM_API_DOCS_SPEC = {
     "v2.listActionTypesFullMetadata": {
       "variables": {},
     },
+    "v2.searchActionTypesFullMetadata": {
+      "variables": {},
+    },
     "v2.getActionTypeFullMetadata": {
+      "variables": {},
+    },
+    "v2.getActionTypeFullMetadataBatch": {
       "variables": {},
     },
     "v2.listObjectTypesV2": {
@@ -254,6 +269,9 @@ export const PLATFORM_API_DOCS_SPEC = {
       "variables": {},
     },
     "v2.getObjectTypeFullMetadata": {
+      "variables": {},
+    },
+    "v2.getObjectTypeFullMetadataBatch": {
       "variables": {},
     },
     "v2.getObjectTypeEditsHistory": {
@@ -329,6 +347,12 @@ export const PLATFORM_API_DOCS_SPEC = {
       "variables": {},
     },
     "v2.decrypt": {
+      "variables": {},
+    },
+    "v2.encryptWithDefaultChannel": {
+      "variables": {},
+    },
+    "v2.encrypt": {
       "variables": {},
     },
     "v2.listInterfaceTypes": {
@@ -440,6 +464,9 @@ export const PLATFORM_API_DOCS_SPEC = {
       "variables": {},
     },
     "v2.listScenarioEditedLinks": {
+      "variables": {},
+    },
+    "v2.listScenarioConflictingObjects": {
       "variables": {},
     },
     "v2.listScanRecords": {
@@ -838,6 +865,9 @@ export const PLATFORM_API_DOCS_SPEC = {
     "v2.getByPathResourcesBatch": {
       "variables": {},
     },
+    "v2.getRecentlyViewed": {
+      "variables": {},
+    },
     "v2.restoreResource": {
       "variables": {},
     },
@@ -863,6 +893,15 @@ export const PLATFORM_API_DOCS_SPEC = {
       "variables": {},
     },
     "v2.removeResourceRoles": {
+      "variables": {},
+    },
+    "v2.listResourceTags": {
+      "variables": {},
+    },
+    "v2.addResourceTags": {
+      "variables": {},
+    },
+    "v2.removeResourceTags": {
       "variables": {},
     },
     "v2.createFolder": {
@@ -1280,6 +1319,18 @@ export const PLATFORM_API_DOCS_SPEC = {
       "variables": {},
     },
     "v2.updateDocument": {
+      "variables": {},
+    },
+    "v2.resolveApplicationDocument": {
+      "variables": {},
+    },
+    "v2.createDocumentAsChild": {
+      "variables": {},
+    },
+    "v2.createDocumentWithMatchingSecurity": {
+      "variables": {},
+    },
+    "v2.createDocumentV2": {
       "variables": {},
     },
     "v2.getRecord": {

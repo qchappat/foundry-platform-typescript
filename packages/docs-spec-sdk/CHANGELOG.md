@@ -1,5 +1,17 @@
 # @osdk/docs-spec-sdk
 
+## 0.22.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+## 0.21.0
+
+### Minor Changes
+
+- 903fc66: Add scenario-reference action parameter IR and scenario-rule template metadata.
+
 ## 0.20.0
 
 ### Minor Changes

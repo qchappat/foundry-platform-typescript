@@ -37,7 +37,8 @@ const _create: $FoundryPlatformMethod<
 > = [1, "/v2/pack/documents", 3];
 
 /**
- * Creates a new Document.
+ * Deprecated: use `createV2` instead, which takes the document parent (namespace or folder)
+ * directly on the request.
  *
  * @alpha
  *
@@ -116,6 +117,8 @@ const _search: $FoundryPlatformMethod<
 /**
  * Loads all PACK Documents visible to the user of the provided Document Type Name. If a search request
  * is provided, filters and sorts the results based on the user's query, sort, and pagination options.
+ * When an ontology RID is provided on the request, results are scoped to that ontology; otherwise the
+ * document type name is searched across all ontologies.
  *
  * @alpha
  *
@@ -157,4 +160,108 @@ export function update(
   ]
 ): Promise<_Pack.Document> {
   return $foundryPlatformFetch($ctx, _update, ...args);
+}
+
+const _resolveApplication: $FoundryPlatformMethod<
+  (
+    documentId: _Pack.DocumentRid,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ) => Promise<_Pack.ResolveDocumentApplicationResponse>
+> = [0, "/v2/pack/documents/{0}/resolveApplication", 2];
+
+/**
+ * Resolves a PACK Document to the application that owns its Document Type. Returns the owning
+ * application id from the document type metadata, or empty if none is configured.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:pack-read]
+ * URL: /v2/pack/documents/{documentId}/resolveApplication
+ */
+export function resolveApplication(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    documentId: _Pack.DocumentRid,
+
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ]
+): Promise<_Pack.ResolveDocumentApplicationResponse> {
+  return $foundryPlatformFetch($ctx, _resolveApplication, ...args);
+}
+
+const _createChild: $FoundryPlatformMethod<
+  (
+    $body: _Pack.CreateDocumentAsChildRequest,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ) => Promise<_Pack.Document>
+> = [1, "/v2/pack/documents/createChild", 3];
+
+/**
+ * Creates a PACK Document as a hidden child of the given folder or document, inheriting its security and staying
+ * in sync as the parent's security changes.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:pack-write]
+ * URL: /v2/pack/documents/createChild
+ */
+export function createChild(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    $body: _Pack.CreateDocumentAsChildRequest,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ]
+): Promise<_Pack.Document> {
+  return $foundryPlatformFetch($ctx, _createChild, ...args);
+}
+
+const _createMatchingSecurity: $FoundryPlatformMethod<
+  (
+    $body: _Pack.CreateDocumentWithMatchingSecurityRequest,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ) => Promise<_Pack.Document>
+> = [1, "/v2/pack/documents/createMatchingSecurity", 3];
+
+/**
+ * Creates a PACK Document that copies the directly-applied security markings of a source Document. The
+ * new Document's security is independent of the source's afterward.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:pack-write]
+ * URL: /v2/pack/documents/createMatchingSecurity
+ */
+export function createMatchingSecurity(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    $body: _Pack.CreateDocumentWithMatchingSecurityRequest,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ]
+): Promise<_Pack.Document> {
+  return $foundryPlatformFetch($ctx, _createMatchingSecurity, ...args);
+}
+
+const _createV2: $FoundryPlatformMethod<
+  (
+    $body: _Pack.CreateDocumentV2Request,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ) => Promise<_Pack.Document>
+> = [1, "/v2/pack/documents/createV2", 3];
+
+/**
+ * Creates a PACK Document and returns it.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:pack-write]
+ * URL: /v2/pack/documents/createV2
+ */
+export function createV2(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    $body: _Pack.CreateDocumentV2Request,
+    $queryParams?: { preview?: _Core.PreviewMode | undefined },
+  ]
+): Promise<_Pack.Document> {
+  return $foundryPlatformFetch($ctx, _createV2, ...args);
 }

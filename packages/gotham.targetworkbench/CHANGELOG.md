@@ -1,5 +1,131 @@
 # @osdk/gotham.targetworkbench
 
+## 0.48.0
+
+### Minor Changes
+
+- 57ef640: Regenerate SDKs with API version 1.1763.1
+
+### Patch Changes
+
+- Updated dependencies [57ef640]
+  - @osdk/gotham.core@0.48.0
+
+## 0.47.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/shared.net.platformapi@1.8.0
+  - @osdk/gotham.core@0.47.0
+
+## 0.46.0
+
+### Minor Changes
+
+- 3f31e9f: Regenerate SDKs with API version 1.1751.1
+
+### Patch Changes
+
+- Updated dependencies [3f31e9f]
+  - @osdk/gotham.core@0.46.0
+
+## 0.45.0
+
+### Minor Changes
+
+- 0e60c3e: Regenerate SDKs with API version 1.1740.1
+
+### Patch Changes
+
+- Updated dependencies [0e60c3e]
+  - @osdk/gotham.core@0.45.0
+
+## 0.44.0
+
+### Minor Changes
+
+- 0dc6240: regenerate platform sdk
+- 934f9e1: Regenerate SDKs with API version 1.1734.0
+
+### Patch Changes
+
+- Updated dependencies [0dc6240]
+- Updated dependencies [934f9e1]
+  - @osdk/gotham.core@0.44.0
+
+## 0.43.0
+
+### Minor Changes
+
+- e0a20ae: Regenerate SDKs with API version 1.1721.0
+
+### Patch Changes
+
+- Updated dependencies [e0a20ae]
+  - @osdk/gotham.core@0.43.0
+
+## 0.42.0
+
+### Minor Changes
+
+- be7f6cd: Regenerate SDKs with API version 1.1716.0
+
+### Patch Changes
+
+- Updated dependencies [be7f6cd]
+  - @osdk/gotham.core@0.42.0
+
+## 0.41.0
+
+### Minor Changes
+
+- bbdf2b4: Regenerate SDKs with API version 1.1709.0
+
+### Patch Changes
+
+- Updated dependencies [bbdf2b4]
+  - @osdk/gotham.core@0.41.0
+
+## 0.40.0
+
+### Minor Changes
+
+- 7357b5f: Regenerate SDKs with API version 1.1695.1
+
+### Patch Changes
+
+- Updated dependencies [7357b5f]
+  - @osdk/gotham.core@0.40.0
+
+## 0.39.0
+
+### Minor Changes
+
+- 241d1bb: Regenerate SDKs with API version 1.1695.0
+
+### Patch Changes
+
+- Updated dependencies [241d1bb]
+  - @osdk/gotham.core@0.39.0
+
+## 0.38.0
+
+### Minor Changes
+
+- 0ee40aa: Regenerate SDKs with API version 1.1668.0
+- b53de25: Regenerate SDKs with API version 1.1675.0
+
+### Patch Changes
+
+- Updated dependencies [0ee40aa]
+- Updated dependencies [b53de25]
+  - @osdk/gotham.core@0.38.0
+
 ## 0.37.0
 
 ### Minor Changes

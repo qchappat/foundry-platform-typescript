@@ -88,6 +88,13 @@ export interface AddResourceRolesRequest {
 }
 
 /**
+ * Log Safety: SAFE
+ */
+export interface AddResourceTagsRequest {
+  tagRids: Array<TagRid>;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface CreateFolderRequest {
@@ -215,6 +222,15 @@ export interface GetFoldersBatchResponse {
 }
 
 /**
+ * Response containing the resources most recently viewed by the calling user.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface GetRecentlyViewedResponse {
+  data: Array<RecentlyViewedResource>;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface GetResourcesBatchRequestElement {
@@ -274,6 +290,13 @@ export interface ListProjectResourceReferencesResponse {
 export interface ListResourceRolesResponse {
   data: Array<ResourceRole>;
   nextPageToken?: _Core.PageToken;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface ListResourceTagsResponse {
+  data: Array<ResourceTag>;
 }
 
 /**
@@ -439,6 +462,26 @@ export type ProjectTemplateVariableValue = LooselyBrandedString<
 >;
 
 /**
+   * The maximum number of recently viewed resources to return.
+Validation rules:
+
+must be greater than or equal to 1
+   *
+   * Log Safety: SAFE
+   */
+export type RecentlyViewedLimit = number;
+
+/**
+ * A resource that was recently viewed by the calling user, along with when it was last viewed.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface RecentlyViewedResource {
+  resource: Resource;
+  lastViewed: string;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface RemoveMarkingsRequest {
@@ -464,6 +507,13 @@ export interface RemoveProjectResourceReferencesRequest {
  */
 export interface RemoveResourceRolesRequest {
   roles: Array<ResourceRoleIdentifier>;
+}
+
+/**
+ * Log Safety: SAFE
+ */
+export interface RemoveResourceTagsRequest {
+  tagRids: Array<TagRid>;
 }
 
 /**
@@ -513,7 +563,7 @@ export interface Resource {
 }
 
 /**
- * The display name of the Resource
+ * The display name of the resource
  *
  * Log Safety: UNSAFE
  */
@@ -527,7 +577,7 @@ export type ResourceDisplayName = LooselyBrandedString<"ResourceDisplayName">;
 export type ResourcePath = LooselyBrandedString<"ResourcePath">;
 
 /**
- * The unique resource identifier (RID) of a Resource.
+ * The unique resource identifier (RID) of a resource.
  *
  * Log Safety: UNSAFE
  */
@@ -568,7 +618,24 @@ export type ResourceRolePrincipalIdentifier =
   | ({ type: "everyone" } & Everyone);
 
 /**
- * The type of the Resource derived from the Resource Identifier (RID).
+ * Log Safety: UNSAFE
+ */
+export interface ResourceTag {
+  tagRid: TagRid;
+  displayName: ResourceTagDisplayName;
+}
+
+/**
+ * The display name of the tag, qualified by its category as {category}:{tag}.
+ *
+ * Log Safety: UNSAFE
+ */
+export type ResourceTagDisplayName = LooselyBrandedString<
+  "ResourceTagDisplayName"
+>;
+
+/**
+ * The type of the resource derived from the Resource Identifier (RID).
  *
  * Log Safety: SAFE
  */
@@ -688,6 +755,13 @@ export type SpaceMavenIdentifier = LooselyBrandedString<"SpaceMavenIdentifier">;
  * Log Safety: SAFE
  */
 export type SpaceRid = LooselyBrandedString<"SpaceRid">;
+
+/**
+ * The unique resource identifier (RID) of a Tag.
+ *
+ * Log Safety: SAFE
+ */
+export type TagRid = LooselyBrandedString<"TagRid">;
 
 /**
    * Values:

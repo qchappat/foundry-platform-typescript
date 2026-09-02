@@ -15,6 +15,7 @@
  */
 
 import type * as _Core from "@osdk/internal.foundry.core";
+import type * as _Datasets from "@osdk/internal.foundry.datasets";
 import type * as _Geo from "@osdk/internal.foundry.geo";
 
 export type LooselyBrandedString<T extends string> = string & {
@@ -116,6 +117,7 @@ export type ActionParameterType =
   | ({ type: "objectSet" } & OntologyObjectSetType)
   | ({ type: "geohash" } & _Core.GeohashType)
   | ({ type: "vector" } & _Core.VectorType)
+  | ({ type: "decimal" } & _Core.DecimalType)
   | ({ type: "object" } & OntologyObjectType)
   | ({ type: "timestamp" } & _Core.TimestampType);
 
@@ -130,6 +132,26 @@ export interface ActionParameterV2 {
   dataType: ActionParameterType;
   required: boolean;
   typeClasses: Array<TypeClass>;
+  validation?: ActionParameterValidation;
+}
+
+/**
+ * Validation metadata surfaced for a parameter.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ActionParameterValidation {
+  defaultValidation: ActionParameterValidationBlock;
+}
+
+/**
+ * Validation constraints for a parameter.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ActionParameterValidationBlock {
+  allowedValues?: ParameterAllowedValues;
+  arraySize?: ParameterArraySize;
 }
 
 /**
@@ -1073,6 +1095,15 @@ export interface Attachment {
 }
 
 /**
+ * The parameter value (an attachment rid) must reference an attachment within the configured size limit.
+ *
+ * Log Safety: SAFE
+ */
+export interface AttachmentAllowedValues {
+  maxSizeBytes?: _Core.SizeBytes;
+}
+
+/**
  * The attachment metadata response
  *
  * Log Safety: UNSAFE
@@ -1277,9 +1308,49 @@ export interface CenterPoint {
 export type CenterPointTypes = { type: "Point" } & _Geo.GeoPoint;
 
 /**
+   * Controls which Cipher Channel is used when encrypting a value. If not specified, defaults to PREFER_EXISTING.
+
+PREFER_EXISTING: use the Cipher Channel parsed from the existing ciphertext value; fall back to the default channel configured in ontology metadata.
+PREFER_DEFAULT: use the default channel configured in ontology metadata; fall back to the channel parsed from the existing ciphertext value.
+EXISTING_ONLY: use the channel parsed from the existing ciphertext value only; error if the value is not already encrypted.
+DEFAULT_ONLY: use the default channel configured in ontology metadata only; error if none is configured.
+   *
+   * Log Safety: SAFE
+   */
+export type CipherChannelStrategy =
+  | "PREFER_EXISTING"
+  | "PREFER_DEFAULT"
+  | "EXISTING_ONLY"
+  | "DEFAULT_ONLY";
+
+/**
+   * A value encrypted with Cipher, stored in its envelope form which encodes
+the Cipher Channel used to encrypt it (for example CIPHER::{cipherChannelRid}::<ciphertext>::CIPHER).
+   *
+   * Log Safety: UNSAFE
+   */
+export type CipherText = LooselyBrandedString<"CipherText">;
+
+/**
  * Log Safety: UNSAFE
  */
 export type CipherTextProperty = LooselyBrandedString<"CipherTextProperty">;
+
+/**
+ * The name of a column in a tabular datasource.
+ *
+ * Log Safety: UNSAFE
+ */
+export type ColumnName = LooselyBrandedString<"ColumnName">;
+
+/**
+ * A property bound to a single column in the backing datasource.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ColumnPropertyMapping {
+  column: ColumnName;
+}
 
 /**
    * The conjunctive set of markings required to access the property value.
@@ -1570,6 +1641,20 @@ export interface CurrentUserArgument {}
 export type CustomTypeId = LooselyBrandedString<"CustomTypeId">;
 
 /**
+ * The id of a datasource branch. Branch ids are user supplied strings, not RIDs.
+ *
+ * Log Safety: UNSAFE
+ */
+export type DatasourceBranchId = LooselyBrandedString<"DatasourceBranchId">;
+
+/**
+ * Randomly generated identifier for an object type's datasource.
+ *
+ * Log Safety: SAFE
+ */
+export type DatasourceRid = LooselyBrandedString<"DatasourceRid">;
+
+/**
    * Represents the value of data in the following format. Note that these values can be nested, for example an array of structs.
 | Type                                | JSON encoding                                         | Example                                                                                                                                                       |
 |-------------------------------------|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1603,6 +1688,18 @@ export type CustomTypeId = LooselyBrandedString<"CustomTypeId">;
    * Log Safety: UNSAFE
    */
 export type DataValue = any;
+
+/**
+ * The parameter value must fall within the specified date or timestamp range.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface DatetimeAllowedValues {
+  gt?: ParameterDatetimeValue;
+  gte?: ParameterDatetimeValue;
+  lt?: ParameterDatetimeValue;
+  lte?: ParameterDatetimeValue;
+}
 
 /**
  * Log Safety: UNSAFE
@@ -1677,7 +1774,7 @@ export interface DateValue {
  * Log Safety: DO_NOT_LOG
  */
 export interface DecryptionResult {
-  plaintext?: Plaintext;
+  plaintext: Plaintext;
 }
 
 /**
@@ -1823,6 +1920,13 @@ export interface DerivedTimeSeriesProperty {
 }
 
 /**
+ * The RID of a direct-write source backing an object type.
+ *
+ * Log Safety: SAFE
+ */
+export type DirectSourceRid = LooselyBrandedString<"DirectSourceRid">;
+
+/**
    * The disjunctive set of markings required to access the property value.
 Disjunctive markings are represented as a conjunctive list of disjunctive sets.
 The top-level set is a conjunction of sets, where each inner set should be
@@ -1928,6 +2032,13 @@ export type EditHistoryEdit =
   | ({ type: "modifyEdit" } & ModifyEdit);
 
 /**
+ * A property on an object type that is permissioned to a tabular datasource, but the contents are only populated through Actions.
+ *
+ * Log Safety: SAFE
+ */
+export interface EditOnlyPropertyMapping {}
+
+/**
  * Log Safety: UNSAFE
  */
 export type EditsHistoryFilter =
@@ -1958,6 +2069,24 @@ export interface EditsHistoryTimestampFilter {
  * Log Safety: SAFE
  */
 export type EditTypeFilter = "create" | "modify" | "delete";
+
+/**
+ * The request to encrypt a plaintext value into a CipherText value.
+ *
+ * Log Safety: DO_NOT_LOG
+ */
+export interface EncryptionRequest {
+  plaintext: Plaintext;
+}
+
+/**
+ * The result of a CipherText encryption. If successful, the encrypted ciphertext value will be returned. Otherwise, an error will be thrown.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface EncryptionResult {
+  ciphertext: CipherText;
+}
 
 /**
  * Log Safety: UNSAFE
@@ -2097,6 +2226,15 @@ properties.{propertyApiName}.isNull=false.
    * Log Safety: UNSAFE
    */
 export type FilterValue = LooselyBrandedString<"FilterValue">;
+
+/**
+ * An absolute datetime bound (ISO 8601 timestamp or date string).
+ *
+ * Log Safety: UNSAFE
+ */
+export interface FixedDatetimeValue {
+  value: ParameterConstraintValue;
+}
 
 /**
  * Integer key for fixed value mapping.
@@ -2323,6 +2461,27 @@ export interface GetActionTypeByRidBatchResponse {
 }
 
 /**
+ * Log Safety: UNSAFE
+ */
+export interface GetActionTypeFullMetadataBatchRequest {
+  requests: Array<GetActionTypeFullMetadataBatchRequestElement>;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface GetActionTypeFullMetadataBatchRequestElement {
+  actionType: ActionTypeApiName;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface GetActionTypeFullMetadataBatchResponse {
+  data: Array<ActionTypeFullMetadata>;
+}
+
+/**
  * Log Safety: SAFE
  */
 export interface GetObjectTypeByRidBatchRequest {
@@ -2341,6 +2500,28 @@ export interface GetObjectTypeByRidBatchRequestElement {
  */
 export interface GetObjectTypeByRidBatchResponse {
   data: Array<ObjectTypeV2>;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface GetObjectTypeFullMetadataBatchRequest {
+  requests: Array<GetObjectTypeFullMetadataBatchRequestElement>;
+  includeLinkTypes?: boolean;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface GetObjectTypeFullMetadataBatchRequestElement {
+  objectType: ObjectTypeApiName;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface GetObjectTypeFullMetadataBatchResponse {
+  data: Array<ObjectTypeFullMetadata>;
 }
 
 /**
@@ -2530,6 +2711,16 @@ export interface InQuery {
 export interface IntegerValue {
   value: number;
 }
+
+/**
+   * The name in the API of an action defined on an interface that implementing object types provide a concrete
+action type for.
+   *
+   * Log Safety: UNSAFE
+   */
+export type InterfaceActionTypeConstraintApiName = LooselyBrandedString<
+  "InterfaceActionTypeConstraintApiName"
+>;
 
 /**
    * An interface property type with an additional field to indicate constraints that need to be satisfied by
@@ -2969,12 +3160,59 @@ export interface LinkSideObject {
 }
 
 /**
+ * Messages sent over the link type subscription WebSocket.
+ *
+ * Log Safety: UNSAFE
+ */
+export type LinksMessage =
+  | ({ type: "subscriptionClosed" } & SubscriptionClosed)
+  | ({ type: "subscribeResponses" } & ObjectSetSubscribeResponses)
+  | ({ type: "refresh" } & RefreshLinks)
+  | ({ type: "updates" } & LinkUpdates);
+
+/**
+   * Represents the state of a link change. ADDED indicates the link was created. REMOVED indicates
+the link was deleted. Updates are represented as a REMOVED followed by an ADDED LinkState in a
+single LinkUpdates message.
+   *
+   * Log Safety: SAFE
+   */
+export type LinkState = "ADDED" | "REMOVED";
+
+/**
+   * Identifies an object by its object type and primary key. Used in link subscription
+requests and responses to identify objects on either side of a link.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface LinkSubscriptionObjectLocator {
+  objectType: ObjectTypeApiName;
+  primaryKey: ObjectPrimaryKey;
+}
+
+/**
+ * A list of object locators to report link changes on.
+ *
+ * Log Safety: UNSAFE
+ */
+export type LinkSubscriptionObjectLocators = Array<
+  LinkSubscriptionObjectLocator
+>;
+
+/**
    * The name of the link type in the API. To find the API name for your Link Type, check the Ontology Manager
 application.
    *
    * Log Safety: UNSAFE
    */
 export type LinkTypeApiName = LooselyBrandedString<"LinkTypeApiName">;
+
+/**
+ * A list of directed link type API names.
+ *
+ * Log Safety: UNSAFE
+ */
+export type LinkTypeApiNames = Array<LinkTypeApiName>;
 
 /**
  * The unique ID of a link type. To find the ID for your link type, check the Ontology Manager application.
@@ -3019,6 +3257,50 @@ export interface LinkTypeSideV2 {
   cardinality: LinkTypeSideCardinality;
   foreignKeyPropertyApiName?: PropertyApiName;
   linkTypeRid: LinkTypeRid;
+}
+
+/**
+   * A request to subscribe to link changes from a selected side of a set of objects over a set of link
+types.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface LinkTypeSubscribeRequest {
+  selectedObjects: LinkSubscriptionObjectLocators;
+  linkTypes: LinkTypeApiNames;
+}
+
+/**
+   * The list of link subscriptions that should be established. A client can stop subscribing to links
+by removing the request from subsequent LinkTypeSubscribeRequests.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface LinkTypeSubscribeRequests {
+  id: RequestId;
+  requests: Array<LinkTypeSubscribeRequest>;
+}
+
+/**
+ * Represents a single link change between two objects.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface LinkUpdate {
+  selectedSide: LinkSubscriptionObjectLocator;
+  linkType: LinkTypeApiName;
+  linkedSide: LinkSubscriptionObjectLocator;
+  state: LinkState;
+}
+
+/**
+ * A message containing link updates for a subscription.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface LinkUpdates {
+  id: SubscriptionId;
+  updates: Array<LinkUpdate>;
 }
 
 /**
@@ -3190,6 +3472,16 @@ export interface ListQueryTypesResponseV2 {
 }
 
 /**
+ * The objects that have a conflicting edit within a scenario for a given object type.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ListScenarioConflictingObjectsResponse {
+  data: Array<ObjectLocator>;
+  nextPageToken?: _Core.PageToken;
+}
+
+/**
  * The object types and link types that have been modified within a scenario.
  *
  * Log Safety: UNSAFE
@@ -3299,6 +3591,8 @@ export interface LoadObjectSetRequestV2 {
   orderBy?: SearchOrderByV2;
   select: Array<SelectedPropertyApiName>;
   selectV2: Array<PropertyIdentifier>;
+  defaultLoadLevel?: PropertyLoadLevel;
+  loadOntologyDefinedDerivedProperties?: boolean;
   pageToken?: _Core.PageToken;
   pageSize?: _Core.PageSize;
   excludeRid?: boolean;
@@ -3331,6 +3625,8 @@ export interface LoadObjectSetV2MultipleObjectTypesRequest {
   orderBy?: SearchOrderByV2;
   select: Array<SelectedPropertyApiName>;
   selectV2: Array<PropertyIdentifier>;
+  defaultLoadLevel?: PropertyLoadLevel;
+  loadOntologyDefinedDerivedProperties?: boolean;
   pageToken?: _Core.PageToken;
   pageSize?: _Core.PageSize;
   excludeRid?: boolean;
@@ -3380,6 +3676,8 @@ export interface LoadObjectSetV2ObjectsOrInterfacesRequest {
   orderBy?: SearchOrderByV2;
   select: Array<SelectedPropertyApiName>;
   selectV2: Array<PropertyIdentifier>;
+  defaultLoadLevel?: PropertyLoadLevel;
+  loadOntologyDefinedDerivedProperties?: boolean;
   pageToken?: _Core.PageToken;
   pageSize?: _Core.PageSize;
   excludeRid?: boolean;
@@ -3502,6 +3800,16 @@ export interface LtQueryV2 {
   field?: PropertyApiName;
   propertyIdentifier?: PropertyIdentifier;
   value: PropertyValue;
+}
+
+/**
+ * The parameter value (a markdown-formatted string) must satisfy the configured length bounds.
+ *
+ * Log Safety: SAFE
+ */
+export interface MarkdownAllowedValues {
+  gte?: number;
+  lte?: number;
 }
 
 /**
@@ -3663,6 +3971,13 @@ export interface MultiplyPropertyExpression {
 }
 
 /**
+ * The parameter must be omitted or empty.
+ *
+ * Log Safety: SAFE
+ */
+export interface MustBeEmptyAllowedValues {}
+
+/**
    * Queries support either a vector matching the embedding model defined on the property, or text that is
 automatically embedded.
    *
@@ -3714,6 +4029,15 @@ export interface NestedQueryAggregation {
 }
 
 /**
+   * Returns the property as-is, without applying reducers or extracting a struct main value. Useful as an
+explicit per-property load level (via PropertyWithLoadLevelSelector) to opt a property out of a
+defaultLoadLevel.
+   *
+   * Log Safety: SAFE
+   */
+export interface NoLoadLevel {}
+
+/**
  * Returns objects where the query is not satisfied.
  *
  * Log Safety: UNSAFE
@@ -3730,6 +4054,13 @@ export interface NotQuery {
 export interface NotQueryV2 {
   value: SearchJsonQueryV2;
 }
+
+/**
+ * The current evaluation time itself. Carries no fields.
+ *
+ * Log Safety: SAFE
+ */
+export interface NowDatetimeValue {}
 
 /**
    * Attach arbitrary text before and/or after the formatted number.
@@ -4200,10 +4531,15 @@ export interface ObjectSetStaticType {
 }
 
 /**
- * Log Safety: UNSAFE
- */
+   * branch identifies the Foundry branch. scenarioRid identifies the Ontology Scenario.
+If a scenario is based on a non-default branch, branch must identify that non-default base branch.
+   *
+   * Log Safety: UNSAFE
+   */
 export interface ObjectSetStreamSubscribeRequest {
   objectSet: ObjectSet;
+  branch?: _Core.FoundryBranch;
+  scenarioRid?: OntologyScenarioRid;
   propertySet: Array<SelectedPropertyApiName>;
   referenceSet: Array<SelectedPropertyApiName>;
   objectLoadingResponseOptions?: ObjectLoadingResponseOptions;
@@ -4314,6 +4650,61 @@ List object types endpoint or check the Ontology Manager.
 export type ObjectTypeApiName = LooselyBrandedString<"ObjectTypeApiName">;
 
 /**
+ * An object type datasource backed by a Foundry dataset.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeDatasetDatasource {
+  datasetRid: _Datasets.DatasetRid;
+  branch?: DatasourceBranchId;
+  propertyMapping: Record<PropertyApiName, PropertyTypeMappingInfo>;
+}
+
+/**
+   * A datasource that supplies property values for an object type. Each object type can have one or more
+datasources; together they back all of the object type's properties. The definition carries the RID of the
+backing Foundry resource (for example, the dataset RID for a dataset-backed object type), enabling callers to
+navigate from an object type to its backing data.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface ObjectTypeDatasource {
+  rid: DatasourceRid;
+  definition: ObjectTypeDatasourceDefinition;
+}
+
+/**
+   * The definition of an object type datasource, identifying the kind of Foundry resource that backs the object
+type.
+   *
+   * Log Safety: UNSAFE
+   */
+export type ObjectTypeDatasourceDefinition =
+  | ({ type: "timeSeries" } & ObjectTypeTimeSeriesDatasource)
+  | ({ type: "unsupported" } & ObjectTypeUnsupportedDatasource)
+  | ({ type: "restrictedView" } & ObjectTypeRestrictedViewDatasource)
+  | ({ type: "stream" } & ObjectTypeStreamDatasource)
+  | ({ type: "mediaSetView" } & ObjectTypeMediaSetViewDatasource)
+  | ({ type: "direct" } & ObjectTypeDirectDatasource)
+  | ({ type: "geotimeSeries" } & ObjectTypeGeotimeSeriesDatasource)
+  | ({ type: "editsOnly" } & ObjectTypeEditsOnlyDatasource)
+  | ({ type: "dataset" } & ObjectTypeDatasetDatasource)
+  | ({ type: "table" } & ObjectTypeTableDatasource);
+
+/**
+   * An object type datasource backed by a direct-write source. Property values are written directly to the
+datasource rather than being read from a separate Foundry resource. Unlike an edits-only datasource, a direct
+datasource has a backing source that values are written to by some writer. An edits-only datasource has no
+backing source at all and its properties are populated solely via Actions.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface ObjectTypeDirectDatasource {
+  directSourceRid: DirectSourceRid;
+  propertyMapping: Record<PropertyApiName, PropertyTypeMappingInfo>;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface ObjectTypeEdits {
@@ -4349,6 +4740,17 @@ export interface ObjectTypeEditsHistoryResponse {
 }
 
 /**
+   * An object type datasource that is not backed by any external Foundry resource. All properties on the object type
+can only be populated via Actions. Other datasources have edit only properties, which are permissioned to the
+backing tabular datasource. This datasource has no backing tabular datasource and is a true edit only object
+type. Note that this datasource type is incompatible with any other datasource and all the properties on the
+object type are backed by it.
+   *
+   * Log Safety: SAFE
+   */
+export interface ObjectTypeEditsOnlyDatasource {}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface ObjectTypeFullMetadata {
@@ -4363,6 +4765,17 @@ export interface ObjectTypeFullMetadata {
 }
 
 /**
+   * An object type datasource backed by a Geotime series integration, providing values for Geotime series reference
+properties.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface ObjectTypeGeotimeSeriesDatasource {
+  geotimeSeriesIntegrationRid: GeotimeSeriesIntegrationRid;
+  properties: Array<PropertyApiName>;
+}
+
+/**
  * Log Safety: UNSAFE
  */
 export interface ObjectTypeInterfaceImplementation {
@@ -4374,6 +4787,7 @@ export interface ObjectTypeInterfaceImplementation {
     InterfacePropertyTypeImplementation
   >;
   links: Record<InterfaceLinkTypeApiName, Array<LinkTypeApiName>>;
+  actionTypes: Record<InterfaceActionTypeConstraintApiName, ActionTypeApiName>;
 }
 
 /**
@@ -4388,11 +4802,78 @@ export interface ObjectTypeLinkTypeApiNameMapping {
 }
 
 /**
+ * An object type datasource backed by a Foundry media set view, providing media for media reference properties.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeMediaSetViewDatasource {
+  mediaSetRid: _Core.MediaSetRid;
+  mediaSetViewRid: _Core.MediaSetViewRid;
+  properties: Array<PropertyApiName>;
+}
+
+/**
+ * An object type datasource backed by a Foundry restricted view.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeRestrictedViewDatasource {
+  restrictedViewRid: RestrictedViewRid;
+  propertyMapping: Record<PropertyApiName, PropertyTypeMappingInfo>;
+}
+
+/**
  * The unique resource identifier of an object type, useful for interacting with other Foundry APIs.
  *
  * Log Safety: SAFE
  */
 export type ObjectTypeRid = LooselyBrandedString<"ObjectTypeRid">;
+
+/**
+ * An object type datasource backed by a Foundry stream.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeStreamDatasource {
+  streamRid: StreamRid;
+  branch?: DatasourceBranchId;
+  propertyMapping: Record<PropertyApiName, PropertyTypeMappingInfo>;
+}
+
+/**
+ * An object type datasource backed by a Foundry table.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeTableDatasource {
+  tableRid: TableRid;
+  branch?: DatasourceBranchId;
+  propertyMapping: Record<PropertyApiName, PropertyTypeMappingInfo>;
+}
+
+/**
+ * An object type datasource backed by a time series sync, providing values for time-dependent properties.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ObjectTypeTimeSeriesDatasource {
+  timeSeriesSyncRid: TimeseriesSyncRid;
+  properties: Array<PropertyApiName>;
+}
+
+/**
+   * A datasource of a kind not yet exposed in the public API. The unsupportedType discriminator supplies the
+underlying OMS variant so callers can recognize known but unmodelled cases (e.g., derived properties). Variants
+the adapter does not recognise at all are returned with an "unknown" discriminator. The properties list
+enumerates the property API names this datasource backs. The properties will be empty for "unknown"
+datasources.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface ObjectTypeUnsupportedDatasource {
+  unsupportedType: string;
+  properties: Array<PropertyApiName>;
+}
 
 /**
  * Represents an object type in the Ontology.
@@ -4411,6 +4892,8 @@ export interface ObjectTypeV2 {
   rid: ObjectTypeRid;
   titleProperty: PropertyApiName;
   visibility?: ObjectTypeVisibility;
+  aliases: Array<string>;
+  datasources: Array<ObjectTypeDatasource>;
 }
 
 /**
@@ -4426,6 +4909,16 @@ export type ObjectTypeVisibility = "NORMAL" | "PROMINENT" | "HIDDEN";
 export interface ObjectUpdate {
   object: OntologyObjectV2;
   state: ObjectState;
+}
+
+/**
+ * The parameter value must be one of a fixed set of labelled options.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface OneOfAllowedValues {
+  options: Array<ParameterAllowedValueOption>;
+  otherValuesAllowed: boolean;
 }
 
 /**
@@ -4770,6 +5263,60 @@ export interface Parameter {
 }
 
 /**
+ * A possible value for the parameter.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ParameterAllowedValueOption {
+  displayName: _Core.DisplayName;
+  value: DataValue;
+}
+
+/**
+ * The allowed-values constraint configured on an action parameter.
+ *
+ * Log Safety: UNSAFE
+ */
+export type ParameterAllowedValues =
+  | ({ type: "oneOf" } & OneOfAllowedValues)
+  | ({ type: "datetime" } & DatetimeAllowedValues)
+  | ({ type: "attachment" } & AttachmentAllowedValues)
+  | ({ type: "valueType" } & ValueTypeAllowedValues)
+  | ({ type: "markdown" } & MarkdownAllowedValues)
+  | ({ type: "range" } & RangeAllowedValues)
+  | ({ type: "mustBeEmpty" } & MustBeEmptyAllowedValues)
+  | ({ type: "text" } & TextAllowedValues);
+
+/**
+ * Bounds on the size of an array-typed parameter.
+ *
+ * Log Safety: SAFE
+ */
+export interface ParameterArraySize {
+  gte?: number;
+  lte?: number;
+}
+
+/**
+ * The source of a constraint bound value.
+ *
+ * Log Safety: UNSAFE
+ */
+export type ParameterConstraintValue = {
+  type: "static";
+} & StaticConstraintValue;
+
+/**
+ * A datetime bound value.
+ *
+ * Log Safety: UNSAFE
+ */
+export type ParameterDatetimeValue =
+  | ({ type: "now" } & NowDatetimeValue)
+  | ({ type: "fixed" } & FixedDatetimeValue)
+  | ({ type: "relative" } & RelativeDatetimeValue);
+
+/**
    * A constraint that an action parameter value must satisfy in order to be considered valid.
 Constraints can be configured on action parameters in the Ontology Manager.
 Applicable constraints are determined dynamically based on parameter inputs.
@@ -4811,6 +5358,7 @@ export interface ParameterEvaluationResult {
   result: ValidationResult;
   evaluatedConstraints: Array<ParameterEvaluatedConstraint>;
   required: boolean;
+  defaultValue?: DataValue;
 }
 
 /**
@@ -5089,6 +5637,7 @@ export interface PropertyKnownTypeFormattingRule {
 APPLY_REDUCERS: Returns a single value of an array as configured in the ontology.
 EXTRACT_MAIN_VALUE: Returns the main value of a struct as configured in the ontology.
 APPLY_REDUCERS_AND_EXTRACT_MAIN_VALUE: Performs both to return the reduced main value.
+NO_LOAD_LEVEL: Returns the property as-is, without applying reducers or extracting a struct main value.
    *
    * Log Safety: UNSAFE
    */
@@ -5097,7 +5646,8 @@ export type PropertyLoadLevel =
     type: "applyReducersAndExtractMainValue";
   } & ApplyReducersAndExtractMainValueLoadLevel)
   | ({ type: "applyReducers" } & ApplyReducersLoadLevel)
-  | ({ type: "extractMainValue" } & ExtractMainValueLoadLevel);
+  | ({ type: "extractMainValue" } & ExtractMainValueLoadLevel)
+  | ({ type: "noLoadLevel" } & NoLoadLevel);
 
 /**
  * All marking requirements applicable to a property value.
@@ -5172,6 +5722,18 @@ export interface PropertyTimestampFormattingRule {
  * Log Safety: UNSAFE
  */
 export type PropertyTypeApiName = LooselyBrandedString<"PropertyTypeApiName">;
+
+/**
+   * Describes how a single object type property is bound to its backing tabular datasource. A property may be backed
+by a single column, by a struct (with nested field mappings), or be edit-only (no backing column even though it
+is permissioned to the tabular datasource).
+   *
+   * Log Safety: UNSAFE
+   */
+export type PropertyTypeMappingInfo =
+  | ({ type: "struct" } & StructPropertyMapping)
+  | ({ type: "column" } & ColumnPropertyMapping)
+  | ({ type: "editOnly" } & EditOnlyPropertyMapping);
 
 /**
  * Log Safety: UNSAFE
@@ -5541,6 +6103,18 @@ export interface QueryUnionType {
 }
 
 /**
+ * The parameter value must fall within the specified numeric range.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface RangeAllowedValues {
+  gt?: ParameterConstraintValue;
+  gte?: ParameterConstraintValue;
+  lt?: ParameterConstraintValue;
+  lte?: ParameterConstraintValue;
+}
+
+/**
  * The parameter value must be within the defined range.
  *
  * Log Safety: UNSAFE
@@ -5605,6 +6179,16 @@ export interface ReferenceUpdate {
 export type ReferenceValue = {
   type: "geotimeSeriesValue";
 } & GeotimeSeriesValue;
+
+/**
+ * Indicates that the link types cannot be incrementally updated and must be refreshed.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface RefreshLinks {
+  id: SubscriptionId;
+  linkTypes: LinkTypeApiNames;
+}
 
 /**
  * The list of updated Foundry Objects cannot be provided. The object set must be refreshed using Object Set Service.
@@ -5682,6 +6266,43 @@ export interface RelativeDateRangeQuery {
   relativeStartTime?: RelativeDateRangeBound;
   relativeEndTime?: RelativeDateRangeBound;
   timeZoneId: string;
+}
+
+/**
+ * The magnitude of a relative datetime offset.
+ *
+ * Log Safety: SAFE
+ */
+export type RelativeDatetimeDuration = string;
+
+/**
+ * Direction of a relative datetime offset.
+ *
+ * Log Safety: SAFE
+ */
+export type RelativeDatetimeTense = "FUTURE" | "PAST";
+
+/**
+ * Time unit for relative datetime offsets.
+ *
+ * Log Safety: SAFE
+ */
+export type RelativeDatetimeUnit =
+  | "SECOND"
+  | "MINUTE"
+  | "HOUR"
+  | "DAY"
+  | "WEEK";
+
+/**
+ * A datetime expressed as an offset from the current time.
+ *
+ * Log Safety: SAFE
+ */
+export interface RelativeDatetimeValue {
+  duration: RelativeDatetimeDuration;
+  unit: RelativeDatetimeUnit;
+  tense: RelativeDatetimeTense;
 }
 
 /**
@@ -5765,6 +6386,13 @@ export interface ResolvedInterfacePropertyType {
 }
 
 /**
+ * The RID of a Foundry restricted view.
+ *
+ * Log Safety: SAFE
+ */
+export type RestrictedViewRid = LooselyBrandedString<"RestrictedViewRid">;
+
+/**
  * If not specified, defaults to NONE.
  *
  * Log Safety: SAFE
@@ -5810,6 +6438,26 @@ export type SdkPackageRid = LooselyBrandedString<"SdkPackageRid">;
  * Log Safety: SAFE
  */
 export type SdkVersion = LooselyBrandedString<"SdkVersion">;
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface SearchActionTypesFullMetadataRequest {
+  where?: ActionTypeSearchJsonQueryV2;
+  orderBy?: SearchActionTypesOrderByV2;
+  fuzziness?: ActionTypeFuzziness;
+  pageSize?: _Core.PageSize;
+  pageToken?: _Core.PageToken;
+}
+
+/**
+ * Log Safety: UNSAFE
+ */
+export interface SearchActionTypesFullMetadataResponse {
+  data: Array<ActionTypeFullMetadata>;
+  nextPageToken?: _Core.PageToken;
+  totalCount: _Core.TotalCount;
+}
 
 /**
    * Specifies the ordering of action type search results by a field and an ordering direction. If not provided,
@@ -5940,6 +6588,7 @@ export interface SearchObjectsRequestV2 {
   pageToken?: _Core.PageToken;
   select: Array<PropertyApiName>;
   selectV2: Array<PropertyIdentifier>;
+  defaultLoadLevel?: PropertyLoadLevel;
   excludeRid?: boolean;
   snapshot?: boolean;
   referenceSigningOptions?: ReferenceSigningOptions;
@@ -5978,10 +6627,21 @@ export interface SearchOrderBy {
 export type SearchOrderByType = "fields" | "relevance";
 
 /**
- * Specifies the ordering of search results by a field and an ordering direction or by relevance if scores are required in a nearestNeighbors query. By default orderType is set to fields.
- *
- * Log Safety: UNSAFE
- */
+   * Specifies the ordering of search results by a field and an ordering direction, or by relevance.
+If the fields array is provided, orderType is automatically set to fields.
+If this object is omitted entirely, the ordering is unspecified.
+Setting orderType to relevance requests that results are sorted by decreasing relevance score.
+For queries that include text search filters (e.g. containsAllTerms, containsAnyTerm,
+containsAllTermsInOrder, containsAllTermsInOrderPrefixLastTerm) or nearestNeighbors, the
+relevance score reflects how well each object matches the query. For other queries, the ordering
+is unspecified.
+When paging through results ordered by relevance, ordering is not guaranteed to be consistent
+across pages: an object may appear on multiple pages or be skipped entirely. Use a single page
+when result completeness is required.
+Relevance ordering can be expensive and should only be used when required.
+   *
+   * Log Safety: UNSAFE
+   */
 export interface SearchOrderByV2 {
   orderType?: SearchOrderByType;
   fields: Array<SearchOrderingV2>;
@@ -6254,6 +6914,15 @@ export interface StaticArgument {
 }
 
 /**
+ * A literal constraint value.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface StaticConstraintValue {
+  value: DataValue;
+}
+
+/**
  * Returns action types with the given status.
  *
  * Log Safety: SAFE
@@ -6278,6 +6947,13 @@ export type StreamMessage =
   | ({ type: "refreshObjectSet" } & RefreshObjectSet)
   | ({ type: "subscriptionClosed" } & SubscriptionClosed)
   | ({ type: "subscribeResponses" } & ObjectSetSubscribeResponses);
+
+/**
+ * The RID of a Foundry stream.
+ *
+ * Log Safety: SAFE
+ */
+export type StreamRid = LooselyBrandedString<"StreamRid">;
 
 /**
  * Log Safety: UNSAFE
@@ -6425,6 +7101,15 @@ export interface StructFieldOfPropertyImplementation {
 }
 
 /**
+ * A single struct field's mapping where apiName is the name of a struct field.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface StructFieldPropertyMapping {
+  apiName: StructFieldApiName;
+}
+
+/**
    * A combination of a property identifier and the load level to apply to the property. You can select a reduced
 value for arrays and the main value for structs. If the provided load level cannot be applied to the property
 type, then it will be ignored. This selector is experimental and may not work in filters or sorts.
@@ -6480,6 +7165,16 @@ export type StructParameterFieldApiName = LooselyBrandedString<
 export interface StructParameterFieldArgument {
   parameterId: ParameterId;
   structParameterFieldApiName: StructParameterFieldApiName;
+}
+
+/**
+ * A mapping from the backing column struct field names to a struct property's fields.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface StructPropertyMapping {
+  column: ColumnName;
+  fields: Record<_Core.StructFieldName, StructFieldPropertyMapping>;
 }
 
 /**
@@ -6597,6 +7292,26 @@ export interface SyncApplyActionResponseV2 {
  */
 export interface SynchronousWebhookOutputArgument {
   webhookOutputParamName: string;
+}
+
+/**
+ * The RID of a Foundry table.
+ *
+ * Log Safety: SAFE
+ */
+export type TableRid = LooselyBrandedString<"TableRid">;
+
+/**
+   * The parameter value (a string) must satisfy the configured length bounds and/or regex
+pattern.
+   *
+   * Log Safety: UNSAFE
+   */
+export interface TextAllowedValues {
+  gte?: number;
+  lte?: number;
+  regex?: string;
+  configuredFailureMessage?: string;
 }
 
 /**
@@ -6955,6 +7670,17 @@ structs.
 export type ValueType = LooselyBrandedString<"ValueType">;
 
 /**
+ * The parameter value must conform to the referenced value type.
+ *
+ * Log Safety: UNSAFE
+ */
+export interface ValueTypeAllowedValues {
+  apiName: ValueTypeApiName;
+  rid: ValueTypeRid;
+  versionId: ValueTypeVersionId;
+}
+
+/**
  * The name of the value type in the API in camelCase format.
  *
  * Log Safety: UNSAFE
@@ -7061,6 +7787,11 @@ export interface ValueTypeStructType {
 export interface ValueTypeUnionType {
   memberTypes: Array<ValueTypeFieldType>;
 }
+
+/**
+ * Log Safety: SAFE
+ */
+export type ValueTypeVersionId = string;
 
 /**
    * The name of the Query in the API and an optional version identifier separated by a colon.

@@ -1,5 +1,395 @@
 # @osdk/foundry
 
+## 2.76.0
+
+### Minor Changes
+
+- 57ef640: Regenerate SDKs with API version 1.1763.1
+
+### Patch Changes
+
+- Updated dependencies [57ef640]
+  - @osdk/foundry.admin@2.76.0
+  - @osdk/foundry.aipagents@2.76.0
+  - @osdk/foundry.audit@2.76.0
+  - @osdk/foundry.checkpoints@2.76.0
+  - @osdk/foundry.connectivity@2.76.0
+  - @osdk/foundry.core@2.76.0
+  - @osdk/foundry.datahealth@2.76.0
+  - @osdk/foundry.datasets@2.76.0
+  - @osdk/foundry.filesystem@2.76.0
+  - @osdk/foundry.functions@2.76.0
+  - @osdk/foundry.geo@2.76.0
+  - @osdk/foundry.languagemodels@2.76.0
+  - @osdk/foundry.mediasets@2.76.0
+  - @osdk/foundry.models@2.76.0
+  - @osdk/foundry.notepad@2.76.0
+  - @osdk/foundry.ontologies@2.76.0
+  - @osdk/foundry.operations@2.76.0
+  - @osdk/foundry.orchestration@2.76.0
+  - @osdk/foundry.pack@2.76.0
+  - @osdk/foundry.publicapis@2.76.0
+  - @osdk/foundry.sqlqueries@2.76.0
+  - @osdk/foundry.streams@2.76.0
+  - @osdk/foundry.thirdpartyapplications@2.76.0
+  - @osdk/foundry.widgets@2.76.0
+  - @osdk/foundry.geojson@2.76.0
+
+## 2.75.0
+
+### Minor Changes
+
+- 36f7fa2: add sse support
+
+### Patch Changes
+
+- Updated dependencies [36f7fa2]
+  - @osdk/foundry.thirdpartyapplications@2.75.0
+  - @osdk/foundry.languagemodels@2.75.0
+  - @osdk/shared.net.platformapi@1.8.0
+  - @osdk/foundry.orchestration@2.75.0
+  - @osdk/foundry.connectivity@2.75.0
+  - @osdk/foundry.checkpoints@2.75.0
+  - @osdk/foundry.datahealth@2.75.0
+  - @osdk/foundry.filesystem@2.75.0
+  - @osdk/foundry.ontologies@2.75.0
+  - @osdk/foundry.operations@2.75.0
+  - @osdk/foundry.publicapis@2.75.0
+  - @osdk/foundry.sqlqueries@2.75.0
+  - @osdk/foundry.aipagents@2.75.0
+  - @osdk/foundry.functions@2.75.0
+  - @osdk/foundry.mediasets@2.75.0
+  - @osdk/foundry.datasets@2.75.0
+  - @osdk/foundry.geojson@2.75.0
+  - @osdk/foundry.notepad@2.75.0
+  - @osdk/foundry.streams@2.75.0
+  - @osdk/foundry.widgets@2.75.0
+  - @osdk/foundry.models@2.75.0
+  - @osdk/foundry.admin@2.75.0
+  - @osdk/foundry.audit@2.75.0
+  - @osdk/foundry.core@2.75.0
+  - @osdk/foundry.pack@2.75.0
+  - @osdk/foundry.geo@2.75.0
+
+## 2.74.0
+
+### Minor Changes
+
+- 3f31e9f: Regenerate SDKs with API version 1.1751.1
+
+### Patch Changes
+
+- Updated dependencies [3f31e9f]
+  - @osdk/foundry.admin@2.74.0
+  - @osdk/foundry.aipagents@2.74.0
+  - @osdk/foundry.audit@2.74.0
+  - @osdk/foundry.checkpoints@2.74.0
+  - @osdk/foundry.connectivity@2.74.0
+  - @osdk/foundry.core@2.74.0
+  - @osdk/foundry.datahealth@2.74.0
+  - @osdk/foundry.datasets@2.74.0
+  - @osdk/foundry.filesystem@2.74.0
+  - @osdk/foundry.functions@2.74.0
+  - @osdk/foundry.geo@2.74.0
+  - @osdk/foundry.languagemodels@2.74.0
+  - @osdk/foundry.mediasets@2.74.0
+  - @osdk/foundry.models@2.74.0
+  - @osdk/foundry.notepad@2.74.0
+  - @osdk/foundry.ontologies@2.74.0
+  - @osdk/foundry.operations@2.74.0
+  - @osdk/foundry.orchestration@2.74.0
+  - @osdk/foundry.pack@2.74.0
+  - @osdk/foundry.publicapis@2.74.0
+  - @osdk/foundry.sqlqueries@2.74.0
+  - @osdk/foundry.streams@2.74.0
+  - @osdk/foundry.thirdpartyapplications@2.74.0
+  - @osdk/foundry.widgets@2.74.0
+  - @osdk/foundry.geojson@2.74.0
+
+## 2.73.0
+
+### Minor Changes
+
+- 0e60c3e: Regenerate SDKs with API version 1.1740.1
+
+### Patch Changes
+
+- Updated dependencies [0e60c3e]
+  - @osdk/foundry.admin@2.73.0
+  - @osdk/foundry.aipagents@2.73.0
+  - @osdk/foundry.audit@2.73.0
+  - @osdk/foundry.checkpoints@2.73.0
+  - @osdk/foundry.connectivity@2.73.0
+  - @osdk/foundry.core@2.73.0
+  - @osdk/foundry.datahealth@2.73.0
+  - @osdk/foundry.datasets@2.73.0
+  - @osdk/foundry.filesystem@2.73.0
+  - @osdk/foundry.functions@2.73.0
+  - @osdk/foundry.geo@2.73.0
+  - @osdk/foundry.languagemodels@2.73.0
+  - @osdk/foundry.mediasets@2.73.0
+  - @osdk/foundry.models@2.73.0
+  - @osdk/foundry.notepad@2.73.0
+  - @osdk/foundry.ontologies@2.73.0
+  - @osdk/foundry.operations@2.73.0
+  - @osdk/foundry.orchestration@2.73.0
+  - @osdk/foundry.pack@2.73.0
+  - @osdk/foundry.publicapis@2.73.0
+  - @osdk/foundry.sqlqueries@2.73.0
+  - @osdk/foundry.streams@2.73.0
+  - @osdk/foundry.thirdpartyapplications@2.73.0
+  - @osdk/foundry.widgets@2.73.0
+  - @osdk/foundry.geojson@2.73.0
+
+## 2.72.0
+
+### Minor Changes
+
+- 0dc6240: regenerate platform sdk
+- 934f9e1: Regenerate SDKs with API version 1.1734.0
+
+### Patch Changes
+
+- Updated dependencies [0dc6240]
+- Updated dependencies [934f9e1]
+  - @osdk/foundry.thirdpartyapplications@2.72.0
+  - @osdk/foundry.languagemodels@2.72.0
+  - @osdk/foundry.orchestration@2.72.0
+  - @osdk/foundry.connectivity@2.72.0
+  - @osdk/foundry.checkpoints@2.72.0
+  - @osdk/foundry.datahealth@2.72.0
+  - @osdk/foundry.filesystem@2.72.0
+  - @osdk/foundry.ontologies@2.72.0
+  - @osdk/foundry.operations@2.72.0
+  - @osdk/foundry.publicapis@2.72.0
+  - @osdk/foundry.sqlqueries@2.72.0
+  - @osdk/foundry.aipagents@2.72.0
+  - @osdk/foundry.functions@2.72.0
+  - @osdk/foundry.mediasets@2.72.0
+  - @osdk/foundry.datasets@2.72.0
+  - @osdk/foundry.notepad@2.72.0
+  - @osdk/foundry.streams@2.72.0
+  - @osdk/foundry.widgets@2.72.0
+  - @osdk/foundry.models@2.72.0
+  - @osdk/foundry.admin@2.72.0
+  - @osdk/foundry.audit@2.72.0
+  - @osdk/foundry.core@2.72.0
+  - @osdk/foundry.pack@2.72.0
+  - @osdk/foundry.geo@2.72.0
+  - @osdk/foundry.geojson@2.72.0
+
+## 2.71.0
+
+### Minor Changes
+
+- e0a20ae: Regenerate SDKs with API version 1.1721.0
+
+### Patch Changes
+
+- Updated dependencies [e0a20ae]
+  - @osdk/foundry.admin@2.71.0
+  - @osdk/foundry.aipagents@2.71.0
+  - @osdk/foundry.audit@2.71.0
+  - @osdk/foundry.checkpoints@2.71.0
+  - @osdk/foundry.connectivity@2.71.0
+  - @osdk/foundry.core@2.71.0
+  - @osdk/foundry.datahealth@2.71.0
+  - @osdk/foundry.datasets@2.71.0
+  - @osdk/foundry.filesystem@2.71.0
+  - @osdk/foundry.functions@2.71.0
+  - @osdk/foundry.geo@2.71.0
+  - @osdk/foundry.languagemodels@2.71.0
+  - @osdk/foundry.mediasets@2.71.0
+  - @osdk/foundry.models@2.71.0
+  - @osdk/foundry.notepad@2.71.0
+  - @osdk/foundry.ontologies@2.71.0
+  - @osdk/foundry.operations@2.71.0
+  - @osdk/foundry.orchestration@2.71.0
+  - @osdk/foundry.pack@2.71.0
+  - @osdk/foundry.publicapis@2.71.0
+  - @osdk/foundry.sqlqueries@2.71.0
+  - @osdk/foundry.streams@2.71.0
+  - @osdk/foundry.thirdpartyapplications@2.71.0
+  - @osdk/foundry.widgets@2.71.0
+  - @osdk/foundry.geojson@2.71.0
+
+## 2.70.0
+
+### Minor Changes
+
+- be7f6cd: Regenerate SDKs with API version 1.1716.0
+
+### Patch Changes
+
+- Updated dependencies [be7f6cd]
+  - @osdk/foundry.admin@2.70.0
+  - @osdk/foundry.aipagents@2.70.0
+  - @osdk/foundry.audit@2.70.0
+  - @osdk/foundry.checkpoints@2.70.0
+  - @osdk/foundry.connectivity@2.70.0
+  - @osdk/foundry.core@2.70.0
+  - @osdk/foundry.datahealth@2.70.0
+  - @osdk/foundry.datasets@2.70.0
+  - @osdk/foundry.filesystem@2.70.0
+  - @osdk/foundry.functions@2.70.0
+  - @osdk/foundry.geo@2.70.0
+  - @osdk/foundry.languagemodels@2.70.0
+  - @osdk/foundry.mediasets@2.70.0
+  - @osdk/foundry.models@2.70.0
+  - @osdk/foundry.notepad@2.70.0
+  - @osdk/foundry.ontologies@2.70.0
+  - @osdk/foundry.operations@2.70.0
+  - @osdk/foundry.orchestration@2.70.0
+  - @osdk/foundry.pack@2.70.0
+  - @osdk/foundry.publicapis@2.70.0
+  - @osdk/foundry.sqlqueries@2.70.0
+  - @osdk/foundry.streams@2.70.0
+  - @osdk/foundry.thirdpartyapplications@2.70.0
+  - @osdk/foundry.widgets@2.70.0
+  - @osdk/foundry.geojson@2.70.0
+
+## 2.69.0
+
+### Minor Changes
+
+- bbdf2b4: Regenerate SDKs with API version 1.1709.0
+
+### Patch Changes
+
+- Updated dependencies [bbdf2b4]
+  - @osdk/foundry.admin@2.69.0
+  - @osdk/foundry.aipagents@2.69.0
+  - @osdk/foundry.audit@2.69.0
+  - @osdk/foundry.checkpoints@2.69.0
+  - @osdk/foundry.connectivity@2.69.0
+  - @osdk/foundry.core@2.69.0
+  - @osdk/foundry.datahealth@2.69.0
+  - @osdk/foundry.datasets@2.69.0
+  - @osdk/foundry.filesystem@2.69.0
+  - @osdk/foundry.functions@2.69.0
+  - @osdk/foundry.geo@2.69.0
+  - @osdk/foundry.languagemodels@2.69.0
+  - @osdk/foundry.mediasets@2.69.0
+  - @osdk/foundry.models@2.69.0
+  - @osdk/foundry.notepad@2.69.0
+  - @osdk/foundry.ontologies@2.69.0
+  - @osdk/foundry.operations@2.69.0
+  - @osdk/foundry.orchestration@2.69.0
+  - @osdk/foundry.pack@2.69.0
+  - @osdk/foundry.publicapis@2.69.0
+  - @osdk/foundry.sqlqueries@2.69.0
+  - @osdk/foundry.streams@2.69.0
+  - @osdk/foundry.thirdpartyapplications@2.69.0
+  - @osdk/foundry.widgets@2.69.0
+  - @osdk/foundry.geojson@2.69.0
+
+## 2.68.0
+
+### Minor Changes
+
+- 7357b5f: Regenerate SDKs with API version 1.1695.1
+
+### Patch Changes
+
+- Updated dependencies [7357b5f]
+  - @osdk/foundry.admin@2.68.0
+  - @osdk/foundry.aipagents@2.68.0
+  - @osdk/foundry.audit@2.68.0
+  - @osdk/foundry.checkpoints@2.68.0
+  - @osdk/foundry.connectivity@2.68.0
+  - @osdk/foundry.core@2.68.0
+  - @osdk/foundry.datahealth@2.68.0
+  - @osdk/foundry.datasets@2.68.0
+  - @osdk/foundry.filesystem@2.68.0
+  - @osdk/foundry.functions@2.68.0
+  - @osdk/foundry.geo@2.68.0
+  - @osdk/foundry.languagemodels@2.68.0
+  - @osdk/foundry.mediasets@2.68.0
+  - @osdk/foundry.models@2.68.0
+  - @osdk/foundry.notepad@2.68.0
+  - @osdk/foundry.ontologies@2.68.0
+  - @osdk/foundry.operations@2.68.0
+  - @osdk/foundry.orchestration@2.68.0
+  - @osdk/foundry.pack@2.68.0
+  - @osdk/foundry.publicapis@2.68.0
+  - @osdk/foundry.sqlqueries@2.68.0
+  - @osdk/foundry.streams@2.68.0
+  - @osdk/foundry.thirdpartyapplications@2.68.0
+  - @osdk/foundry.widgets@2.68.0
+  - @osdk/foundry.geojson@2.68.0
+
+## 2.67.0
+
+### Minor Changes
+
+- 241d1bb: Regenerate SDKs with API version 1.1695.0
+
+### Patch Changes
+
+- Updated dependencies [241d1bb]
+  - @osdk/foundry.admin@2.67.0
+  - @osdk/foundry.aipagents@2.67.0
+  - @osdk/foundry.audit@2.67.0
+  - @osdk/foundry.checkpoints@2.67.0
+  - @osdk/foundry.connectivity@2.67.0
+  - @osdk/foundry.core@2.67.0
+  - @osdk/foundry.datahealth@2.67.0
+  - @osdk/foundry.datasets@2.67.0
+  - @osdk/foundry.filesystem@2.67.0
+  - @osdk/foundry.functions@2.67.0
+  - @osdk/foundry.geo@2.67.0
+  - @osdk/foundry.languagemodels@2.67.0
+  - @osdk/foundry.mediasets@2.67.0
+  - @osdk/foundry.models@2.67.0
+  - @osdk/foundry.notepad@2.67.0
+  - @osdk/foundry.ontologies@2.67.0
+  - @osdk/foundry.operations@2.67.0
+  - @osdk/foundry.orchestration@2.67.0
+  - @osdk/foundry.pack@2.67.0
+  - @osdk/foundry.publicapis@2.67.0
+  - @osdk/foundry.sqlqueries@2.67.0
+  - @osdk/foundry.streams@2.67.0
+  - @osdk/foundry.thirdpartyapplications@2.67.0
+  - @osdk/foundry.widgets@2.67.0
+  - @osdk/foundry.geojson@2.67.0
+
+## 2.66.0
+
+### Minor Changes
+
+- 0ee40aa: Regenerate SDKs with API version 1.1668.0
+- b53de25: Regenerate SDKs with API version 1.1675.0
+
+### Patch Changes
+
+- Updated dependencies [0ee40aa]
+- Updated dependencies [b53de25]
+  - @osdk/foundry.admin@2.66.0
+  - @osdk/foundry.aipagents@2.66.0
+  - @osdk/foundry.audit@2.66.0
+  - @osdk/foundry.checkpoints@2.66.0
+  - @osdk/foundry.connectivity@2.66.0
+  - @osdk/foundry.core@2.66.0
+  - @osdk/foundry.datahealth@2.66.0
+  - @osdk/foundry.datasets@2.66.0
+  - @osdk/foundry.filesystem@2.66.0
+  - @osdk/foundry.functions@2.66.0
+  - @osdk/foundry.geo@2.66.0
+  - @osdk/foundry.languagemodels@2.66.0
+  - @osdk/foundry.mediasets@2.66.0
+  - @osdk/foundry.models@2.66.0
+  - @osdk/foundry.notepad@2.66.0
+  - @osdk/foundry.ontologies@2.66.0
+  - @osdk/foundry.operations@2.66.0
+  - @osdk/foundry.orchestration@2.66.0
+  - @osdk/foundry.pack@2.66.0
+  - @osdk/foundry.publicapis@2.66.0
+  - @osdk/foundry.sqlqueries@2.66.0
+  - @osdk/foundry.streams@2.66.0
+  - @osdk/foundry.thirdpartyapplications@2.66.0
+  - @osdk/foundry.widgets@2.66.0
+  - @osdk/foundry.geojson@2.66.0
+
 ## 2.65.0
 
 ### Minor Changes

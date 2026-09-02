@@ -36,6 +36,7 @@ const _list: $FoundryPlatformMethod<
       branch?: _Core.FoundryBranch | undefined;
       pageSize?: _Core.PageSize | undefined;
       pageToken?: _Core.PageToken | undefined;
+      includeDatasources?: boolean | undefined;
     },
   ) => Promise<_Ontologies.ListObjectTypesV2Response>
 > = [0, "/v2/ontologies/{0}/objectTypes", 2];
@@ -46,6 +47,9 @@ const _list: $FoundryPlatformMethod<
  * Each page may be smaller or larger than the requested page size. However, it is guaranteed that if there are
  * more results available, at least one result will be present in the
  * response.
+ *
+ * Note: the `aliases` field is not populated on this endpoint and will always be empty. To retrieve object type
+ * aliases, use the get-by-RID read paths (e.g. `getObjectTypeV2`).
  *
  * @public
  *
@@ -61,6 +65,7 @@ export function list(
       branch?: _Core.FoundryBranch | undefined;
       pageSize?: _Core.PageSize | undefined;
       pageToken?: _Core.PageToken | undefined;
+      includeDatasources?: boolean | undefined;
     },
   ]
 ): Promise<_Ontologies.ListObjectTypesV2Response> {
@@ -71,7 +76,10 @@ const _get: $FoundryPlatformMethod<
   (
     ontology: _Ontologies.OntologyIdentifier,
     objectType: _Ontologies.ObjectTypeApiName,
-    $queryParams?: { branch?: _Core.FoundryBranch | undefined },
+    $queryParams?: {
+      branch?: _Core.FoundryBranch | undefined;
+      includeDatasources?: boolean | undefined;
+    },
   ) => Promise<_Ontologies.ObjectTypeV2>
 > = [0, "/v2/ontologies/{0}/objectTypes/{1}", 2];
 
@@ -89,7 +97,10 @@ export function get(
     ontology: _Ontologies.OntologyIdentifier,
     objectType: _Ontologies.ObjectTypeApiName,
 
-    $queryParams?: { branch?: _Core.FoundryBranch | undefined },
+    $queryParams?: {
+      branch?: _Core.FoundryBranch | undefined;
+      includeDatasources?: boolean | undefined;
+    },
   ]
 ): Promise<_Ontologies.ObjectTypeV2> {
   return $foundryPlatformFetch($ctx, _get, ...args);
@@ -142,6 +153,7 @@ const _getFullMetadata: $FoundryPlatformMethod<
       sdkPackageRid?: _Ontologies.SdkPackageRid | undefined;
       sdkVersion?: _Ontologies.SdkVersion | undefined;
       branch?: _Core.FoundryBranch | undefined;
+      includeDatasources?: boolean | undefined;
     },
   ) => Promise<_Ontologies.ObjectTypeFullMetadata>
 > = [0, "/v2/ontologies/{0}/objectTypes/{1}/fullMetadata", 2];
@@ -165,10 +177,52 @@ export function getFullMetadata(
       sdkPackageRid?: _Ontologies.SdkPackageRid | undefined;
       sdkVersion?: _Ontologies.SdkVersion | undefined;
       branch?: _Core.FoundryBranch | undefined;
+      includeDatasources?: boolean | undefined;
     },
   ]
 ): Promise<_Ontologies.ObjectTypeFullMetadata> {
   return $foundryPlatformFetch($ctx, _getFullMetadata, ...args);
+}
+
+const _getFullMetadataBatch: $FoundryPlatformMethod<
+  (
+    ontology: _Ontologies.OntologyIdentifier,
+    $body: _Ontologies.GetObjectTypeFullMetadataBatchRequest,
+    $queryParams?: {
+      branch?: _Core.FoundryBranch | undefined;
+      preview?: _Core.PreviewMode | undefined;
+    },
+  ) => Promise<_Ontologies.GetObjectTypeFullMetadataBatchResponse>
+> = [1, "/v2/ontologies/{0}/objectTypes/getFullMetadataBatch", 3];
+
+/**
+ * Gets the full metadata for a batch of object types, identified by their API names.
+ *
+ * Set `includeLinkTypes` to return every outgoing link type for each object type alongside its metadata,
+ * without needing to know the link type API names. Link types are ordered by their API name.
+ *
+ * Object types are returned in the order they were requested. Any that don't exist or that the requesting
+ * token lacks permissions for are silently omitted.
+ *
+ * The maximum batch size for this endpoint is 100.
+ *
+ * @alpha
+ *
+ * Required Scopes: [api:ontologies-read]
+ * URL: /v2/ontologies/{ontology}/objectTypes/getFullMetadataBatch
+ */
+export function getFullMetadataBatch(
+  $ctx: $Client | $ClientContext | $OldClient | $OldClientContext,
+  ...args: [
+    ontology: _Ontologies.OntologyIdentifier,
+    $body: _Ontologies.GetObjectTypeFullMetadataBatchRequest,
+    $queryParams?: {
+      branch?: _Core.FoundryBranch | undefined;
+      preview?: _Core.PreviewMode | undefined;
+    },
+  ]
+): Promise<_Ontologies.GetObjectTypeFullMetadataBatchResponse> {
+  return $foundryPlatformFetch($ctx, _getFullMetadataBatch, ...args);
 }
 
 const _getEditsHistory: $FoundryPlatformMethod<
@@ -179,7 +233,6 @@ const _getEditsHistory: $FoundryPlatformMethod<
     $queryParams?: {
       branch?: _Core.FoundryBranch | undefined;
       scenarioRid?: _Ontologies.OntologyScenarioRid | undefined;
-      preview?: _Core.PreviewMode | undefined;
     },
   ) => Promise<_Ontologies.ObjectTypeEditsHistoryResponse>
 > = [1, "/v2/ontologies/{0}/objectTypes/{1}/editsHistory", 3];
@@ -193,7 +246,7 @@ const _getEditsHistory: $FoundryPlatformMethod<
  *
  * Note that filters are ignored for OSv1 object types.
  *
- * @beta
+ * @public
  *
  * Required Scopes: [api:ontologies-read]
  * URL: /v2/ontologies/{ontology}/objectTypes/{objectType}/editsHistory
@@ -207,7 +260,6 @@ export function getEditsHistory(
     $queryParams?: {
       branch?: _Core.FoundryBranch | undefined;
       scenarioRid?: _Ontologies.OntologyScenarioRid | undefined;
-      preview?: _Core.PreviewMode | undefined;
     },
   ]
 ): Promise<_Ontologies.ObjectTypeEditsHistoryResponse> {
